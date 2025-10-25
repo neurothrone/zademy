@@ -1,6 +1,24 @@
+using Microsoft.EntityFrameworkCore;
 using Zademy.Api.Endpoints;
+using Zademy.Business.Services;
+using Zademy.Business.Services.Contracts;
+using Zademy.Persistence.Data;
+using Zademy.Persistence.Repositories;
+using Zademy.Persistence.Repositories.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ZademyDbContext>(options =>
+{
+    options.UseInMemoryDatabase("ZademyDb");
+
+#if DEBUG
+    options.EnableSensitiveDataLogging();
+#endif
+});
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
