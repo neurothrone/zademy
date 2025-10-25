@@ -1,63 +1,65 @@
-using Zademy.Api.Models;
-using Zademy.Core.Shared.Domain;
+using System.ComponentModel.DataAnnotations;
+using Zademy.Business.Services.Contracts;
+using Zademy.Domain.Students;
 
 namespace Zademy.Api.Endpoints;
 
 public static class StudentHandlers
 {
-    private static readonly List<Student> Students =
-    [
-        new() { Id = 1, Name = "John Doe", Email = "john.doe@example.com" },
-        new() { Id = 2, Name = "Jane Smith", Email = "jane.smith@example.com" }
-    ];
-
-    public static async Task<IResult> GetStudentsAsync()
+    public static async Task<IResult> GetStudentsAsync(IStudentService service)
     {
-        return TypedResults.Ok(Students);
+        var result = await service.GetAllAsync();
+        return result.Match<IResult>(
+            onSuccess: students => TypedResults.Ok(students),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
     }
 
-    public static async Task<IResult> GetStudentByIdAsync(int id)
+    public static async Task<IResult> GetStudentByIdAsync(int id, IStudentService service)
     {
-        var student = Students.FirstOrDefault(x => x.Id == id);
-        return student is null
-            ? TypedResults.NotFound()
-            : TypedResults.Ok(student);
+        var result = await service.GetByIdAsync(id);
+        return result.Match<IResult>(
+            onSuccess: student => student is not null
+                ? TypedResults.Ok(student)
+                : TypedResults.NotFound("Student not found."),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
     }
 
-    public static async Task<IResult> CreateStudentAsync(StudentInputDto student)
+    public static async Task<IResult> CreateStudentAsync(StudentInputDto student, IStudentService service)
     {
-        if (student.Name == string.Empty || student.Email == string.Empty)
-            return TypedResults.BadRequest();
+        if (!Validator.TryValidateObject(student, new ValidationContext(student), null, true))
+            return TypedResults.BadRequest("Invalid student data.");
 
-        var newStudent = new Student
-        {
-            Id = Students.Max(x => x.Id) + 1,
-            Name = student.Name,
-            Email = student.Email
-        };
-        Students.Add(newStudent);
-        return TypedResults.Created($"/api/v1/students/{newStudent.Id}", student);
+        var result = await service.CreateAsync(student);
+        return result.Match<IResult>(
+            onSuccess: createdStudent => TypedResults.Created($"/api/v1/students/{createdStudent.Id}", createdStudent),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
     }
 
-    public static async Task<IResult> UpdateStudentAsync(int id, StudentInputDto student)
+    public static async Task<IResult> UpdateStudentAsync(int id, StudentInputDto student, IStudentService service)
     {
-        var existingStudent = Students.FirstOrDefault(x => x.Id == id);
-        if (existingStudent is null)
-            return TypedResults.NotFound();
+        if (!Validator.TryValidateObject(student, new ValidationContext(student), null, true))
+            return TypedResults.BadRequest("Invalid student data.");
 
-        existingStudent.Name = student.Name;
-        existingStudent.Email = student.Email;
-
-        return TypedResults.Ok(existingStudent);
+        var result = await service.UpdateAsync(id, student);
+        return result.Match<IResult>(
+            onSuccess: updatedStudent => updatedStudent is not null
+                ? TypedResults.Ok(updatedStudent)
+                : TypedResults.NotFound("Student not found."),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
     }
 
-    public static async Task<IResult> DeleteStudentAsync(int id)
+    public static async Task<IResult> DeleteStudentAsync(int id, IStudentService service)
     {
-        var student = Students.FirstOrDefault(x => x.Id == id);
-        if (student is null)
-            return TypedResults.NotFound();
-
-        Students.Remove(student);
-        return TypedResults.NoContent();
+        var result = await service.DeleteAsync(id);
+        return result.Match<IResult>(
+            onSuccess: deleted => deleted
+                ? TypedResults.NoContent()
+                : TypedResults.NotFound("Student not found."),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
     }
 }

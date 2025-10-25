@@ -30,19 +30,17 @@ public class StudentService(
         }
     }
 
-    public async Task<Result<StudentItem>> GetByIdAsync(int id)
+    public async Task<Result<StudentItem?>> GetByIdAsync(int id)
     {
         try
         {
             var entity = await repository.GetByIdAsync(id);
-            return entity is null
-                ? Result<StudentItem>.Failure("Student not found.")
-                : Result<StudentItem>.Success(entity.ToDto());
+            return Result<StudentItem?>.Success(entity?.ToDto());
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get Student by ID {id}: {message}", id, ex.Message);
-            return Result<StudentItem>.Failure("Failed to retrieve the student from the database.");
+            return Result<StudentItem?>.Failure("Failed to retrieve the student from the database.");
         }
     }
 
@@ -61,20 +59,18 @@ public class StudentService(
         }
     }
 
-    public async Task<Result<StudentItem>> UpdateAsync(int id, StudentInputDto student)
+    public async Task<Result<StudentItem?>> UpdateAsync(int id, StudentInputDto student)
     {
         try
         {
             var entity = student.ToEntity();
             var updatedEntity = await repository.UpdateAsync(id, entity);
-            return updatedEntity is null
-                ? Result<StudentItem>.Failure("Student not found.")
-                : Result<StudentItem>.Success(updatedEntity.ToDto());
+            return Result<StudentItem?>.Success(updatedEntity?.ToDto());
         }
         catch (DbUpdateException ex)
         {
             logger.LogError("❌ -> Failed to update Student ID {id}: {message}", id, ex.Message);
-            return Result<StudentItem>.Failure("Failed to update the student in the database.");
+            return Result<StudentItem?>.Failure("Failed to update the student in the database.");
         }
     }
 
@@ -83,9 +79,7 @@ public class StudentService(
         try
         {
             var deleted = await repository.DeleteAsync(id);
-            return deleted
-                ? Result<bool>.Success(true)
-                : Result<bool>.Failure("Student not found.");
+            return Result<bool>.Success(deleted);
         }
         catch (DbUpdateException ex)
         {
