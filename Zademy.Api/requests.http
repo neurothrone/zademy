@@ -1,0 +1,6 @@
+@Zademy.Api_HostAddress = http://localhost:5001
+
+GET {{Zademy.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
