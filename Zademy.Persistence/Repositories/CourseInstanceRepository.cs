@@ -9,6 +9,15 @@ public class CourseInstanceRepository(ZademyDbContext context) :
     BaseRepository<CourseInstanceEntity>(context),
     ICourseInstanceRepository
 {
+    public override async Task<List<CourseInstanceEntity>> GetAllAsync()
+    {
+        return await Context.CourseInstances
+            .AsNoTracking()
+            .Include(ci => ci.Course)
+            .Include(ci => ci.Students)
+            .ToListAsync();
+    }
+
     public async Task<List<CourseEntity>> GetCoursesByStudentIdAsync(int studentId)
     {
         return await Context.CourseInstances
