@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Zademy.Api.Endpoints;
+using Zademy.Api.Utils;
 using Zademy.Business.Services;
 using Zademy.Business.Services.Contracts;
 using Zademy.Persistence.Data;
@@ -32,7 +34,17 @@ builder.Services.AddScoped<IGradeService, GradeService>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Zademy API",
+        Description = "API for managing courses, students, course instances, and grades.",
+        Version = "v1"
+    });
+
+    options.DocumentFilter<CustomOrderingDocumentFilter>();
+});
 
 var app = builder.Build();
 
