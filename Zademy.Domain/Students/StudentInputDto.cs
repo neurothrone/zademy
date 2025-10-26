@@ -14,5 +14,6 @@ public record StudentInputDto
     [Required]
     [EmailAddress]
     [MaxLength(255)]
+    [DefaultValue("john.doe@example.com")]
     public required string Email { get; set; }
 }

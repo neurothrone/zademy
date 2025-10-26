@@ -12,10 +12,10 @@ public static class StudentMapper
         Email = entity.Email
     };
 
-    public static StudentEntity ToEntity(this StudentInputDto inputDto, int id = 0) => new()
+    public static StudentEntity ToEntity(this StudentInputDto dto, int id = 0) => new()
     {
         Id = id,
-        Name = inputDto.Name,
-        Email = inputDto.Email
+        Name = dto.Name,
+        Email = dto.Email
     };
 }
