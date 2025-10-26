@@ -11,4 +11,6 @@ public class StudentEntity
 
     [MaxLength(255)]
     public required string Email { get; set; }
+
+    public List<CourseInstanceEntity> CourseInstances { get; set; } = [];
 }

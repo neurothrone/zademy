@@ -7,6 +7,7 @@ public class ZademyDbContext(DbContextOptions<ZademyDbContext> options) : DbCont
 {
     public DbSet<StudentEntity> Students => Set<StudentEntity>();
     public DbSet<CourseEntity> Courses => Set<CourseEntity>();
+    public DbSet<CourseInstanceEntity> CourseInstances => Set<CourseInstanceEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

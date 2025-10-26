@@ -3,7 +3,6 @@ using Zademy.Api.Endpoints;
 using Zademy.Business.Services;
 using Zademy.Business.Services.Contracts;
 using Zademy.Persistence.Data;
-using Zademy.Persistence.Entities;
 using Zademy.Persistence.Repositories;
 using Zademy.Persistence.Repositories.Contracts;
 
@@ -18,11 +17,14 @@ builder.Services.AddDbContext<ZademyDbContext>(options =>
 #endif
 });
 
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 
-builder.Services.AddScoped<ICourseRepository, CourseRepository>();
-builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ICourseInstanceRepository, CourseInstanceRepository>();
+builder.Services.AddScoped<ICourseInstanceService, CourseInstanceService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -51,5 +53,6 @@ app.MapGet("/", context =>
 
 app.MapCourseEndpoints();
 app.MapStudentEndpoints();
+app.MapCourseInstanceEndpoints();
 
 app.Run();
