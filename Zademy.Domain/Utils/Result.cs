@@ -2,6 +2,9 @@ namespace Zademy.Domain.Utils;
 
 public abstract class Result<T>
 {
+    public abstract bool IsSuccess { get; }
+    public abstract bool IsFailure { get; }
+
     public abstract TResult Match<TResult>(Func<T, TResult> onSuccess, Func<string, TResult> onFailure);
     public abstract void When(Action<T> onSuccess, Action<string> onFailure);
 
@@ -11,6 +14,10 @@ public abstract class Result<T>
 
 public class SuccessResult<T>(T value) : Result<T>
 {
+    public override bool IsSuccess => true;
+    public override bool IsFailure => false;
+    public T Value => value;
+
     public override TResult Match<TResult>(Func<T, TResult> onSuccess, Func<string, TResult> onFailure)
     {
         return onSuccess(value);
@@ -24,6 +31,10 @@ public class SuccessResult<T>(T value) : Result<T>
 
 public class FailureResult<T>(string error) : Result<T>
 {
+    public override bool IsSuccess => false;
+    public override bool IsFailure => true;
+    public string Error => error;
+
     public override TResult Match<TResult>(Func<T, TResult> onSuccess, Func<string, TResult> onFailure)
     {
         return onFailure(error);
