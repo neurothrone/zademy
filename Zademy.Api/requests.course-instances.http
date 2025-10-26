@@ -1,0 +1,16 @@
+@ApiUrl = https://localhost:7001/api/v1/course-instances
+@StudentId = 2
+@StartDate = 2025-09-26
+@EndDate = 2025-12-31
+
+### Get all Course Instances
+GET {{ApiUrl}}
+Accept: application/json
+
+### Get Courses by Student ID
+GET {{ApiUrl}}/students/{{StudentId}}/courses
+Accept: application/json
+
+### Get Courses by Date Range
+GET {{ApiUrl}}/courses?startDate={{StartDate}}&endDate={{EndDate}}
+Accept: application/json
