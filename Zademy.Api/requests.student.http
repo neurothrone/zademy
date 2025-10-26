@@ -1,16 +1,17 @@
-@ApiBaseUrl = https://localhost:7001/api/v1
+@ApiUrl = https://localhost:7001/api/v1/students
+@StudentId = 1
 
 
-### Get all students
-GET {{ApiBaseUrl}}/students
+### Get all Students
+GET {{ApiUrl}}
 Accept: application/json
 
-### Get a student by ID
-GET {{ApiBaseUrl}}/students/1
+### Get a Student by ID
+GET {{ApiUrl}}/{{StudentId}}
 Accept: application/json
 
-### Create a new student
-POST {{ApiBaseUrl}}/students
+### Create a new Student
+POST {{ApiUrl}}
 Content-Type: application/json
 
 {
@@ -18,14 +19,14 @@ Content-Type: application/json
   "email": "john.doe@example.com"
 }
 
-### Update a student by ID
-PUT {{ApiBaseUrl}}/students/1
+### Update a Student by ID
+PUT {{ApiUrl}}/{{StudentId}}
 Content-Type: application/json
 
 {
-  "name": "John Does",
+  "name": "John Doe II",
   "email": "john.doe@gmail.com"
 }
 
-### Delete a student by ID
-DELETE {{ApiBaseUrl}}/students/1
+### Delete a Student by ID
+DELETE {{ApiUrl}}/{{StudentId}}
