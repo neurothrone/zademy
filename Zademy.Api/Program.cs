@@ -26,6 +26,9 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ICourseInstanceRepository, CourseInstanceRepository>();
 builder.Services.AddScoped<ICourseInstanceService, CourseInstanceService>();
 
+builder.Services.AddScoped<IGradeRepository, GradeRepository>();
+builder.Services.AddScoped<IGradeService, GradeService>();
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -54,5 +57,6 @@ app.MapGet("/", context =>
 app.MapCourseEndpoints();
 app.MapStudentEndpoints();
 app.MapCourseInstanceEndpoints();
+app.MapGradeEndpoints();
 
 app.Run();
