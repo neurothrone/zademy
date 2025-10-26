@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Zademy.Business.Mappers;
 using Zademy.Business.Services.Contracts;
 using Zademy.Domain.Grades;
 using Zademy.Domain.Utils;
@@ -15,15 +16,11 @@ public class GradeService(
     {
         try
         {
-            var grades = await repository.GetAllAsync();
-            var dtos = grades
-                .Select(g => new GradeDto
-                {
-                    Id = g.Id,
-                    Value = g.Value,
-                })
+            var entities = await repository.GetAllAsync();
+            var grades = entities
+                .Select(g => g.ToDto())
                 .ToList();
-            return Result<List<GradeDto>>.Success(dtos);
+            return Result<List<GradeDto>>.Success(grades);
         }
         catch (Exception ex)
         {
@@ -36,18 +33,11 @@ public class GradeService(
     {
         try
         {
-            var grades = await repository.GetGradesByStudentIdAsync(studentId);
-            var dtos = grades
-                .Select(g => new StudentGradeWithCourseDto
-                {
-                    GradeId = g.Id,
-                    GradeValue = g.Value,
-                    CourseTitle = g.CourseInstance.Course.Title,
-                    CourseStartDate = g.CourseInstance.StartDate,
-                    CourseEndDate = g.CourseInstance.EndDate
-                })
+            var entities = await repository.GetGradesByStudentIdAsync(studentId);
+            var gradesWithCourses = entities
+                .Select(g => g.ToGradeWithCourseDto())
                 .ToList();
-            return Result<List<StudentGradeWithCourseDto>>.Success(dtos);
+            return Result<List<StudentGradeWithCourseDto>>.Success(gradesWithCourses);
         }
         catch (Exception ex)
         {
