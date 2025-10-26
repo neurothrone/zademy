@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zademy.Api", "Zademy.Api\Zademy.Api.csproj", "{154C9DC2-EA48-4834-953F-C8EF626458EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zademy.Core.Shared", "Zademy.Core.Shared\Zademy.Core.Shared.csproj", "{436B51CF-978F-4A27-97F2-08E481224951}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zademy.Persistence", "Zademy.Persistence\Zademy.Persistence.csproj", "{B0C55256-972B-4C44-844C-609601BBFD94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zademy.Business", "Zademy.Business\Zademy.Business.csproj", "{7B676A07-EC23-48BF-B93C-196E5B1FEEAB}"
@@ -20,10 +18,6 @@ Global
 		{154C9DC2-EA48-4834-953F-C8EF626458EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{154C9DC2-EA48-4834-953F-C8EF626458EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{154C9DC2-EA48-4834-953F-C8EF626458EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{436B51CF-978F-4A27-97F2-08E481224951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{436B51CF-978F-4A27-97F2-08E481224951}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{436B51CF-978F-4A27-97F2-08E481224951}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{436B51CF-978F-4A27-97F2-08E481224951}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0C55256-972B-4C44-844C-609601BBFD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0C55256-972B-4C44-844C-609601BBFD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C55256-972B-4C44-844C-609601BBFD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
