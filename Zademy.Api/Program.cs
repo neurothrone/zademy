@@ -39,7 +39,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Zademy API is operational.");
+app.UseStaticFiles();
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/index.html");
+    return Task.CompletedTask;
+});
+
 app.MapCourseEndpoints();
 app.MapStudentEndpoints();
 
