@@ -5,9 +5,7 @@ using Zademy.Persistence.Repositories.Contracts;
 
 namespace Zademy.Persistence.Repositories;
 
-public class StudentRepository(
-    ZademyDbContext context
-) : IStudentRepository
+public class StudentRepository(ZademyDbContext context) : IStudentRepository
 {
     public async Task<List<StudentEntity>> GetAllAsync()
     {
@@ -39,7 +37,6 @@ public class StudentRepository(
         existingStudent.Name = student.Name;
         existingStudent.Email = student.Email;
 
-        // context.Students.Update(existingStudent);
         await context.SaveChangesAsync();
         return existingStudent;
     }
