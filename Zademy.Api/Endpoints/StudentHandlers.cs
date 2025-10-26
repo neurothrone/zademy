@@ -21,7 +21,7 @@ public static class StudentHandlers
         return result.Match<IResult>(
             onSuccess: student => student is not null
                 ? TypedResults.Ok(student)
-                : TypedResults.NotFound("Student not found."),
+                : TypedResults.NotFound(),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
         );
     }
@@ -47,7 +47,7 @@ public static class StudentHandlers
         return result.Match<IResult>(
             onSuccess: updatedStudent => updatedStudent is not null
                 ? TypedResults.Ok(updatedStudent)
-                : TypedResults.NotFound("Student not found."),
+                : TypedResults.NotFound(),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
         );
     }
@@ -58,7 +58,7 @@ public static class StudentHandlers
         return result.Match<IResult>(
             onSuccess: deleted => deleted
                 ? TypedResults.NoContent()
-                : TypedResults.NotFound("Student not found."),
+                : TypedResults.NotFound(),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
         );
     }
