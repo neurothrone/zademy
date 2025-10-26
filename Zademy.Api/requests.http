@@ -1,6 +1,31 @@
-@ApiBaseUrl = http://localhost:5001
+@ApiBaseUrl = https://localhost:7001/api/v1
 
-GET {{ApiBaseUrl}}/weatherforecast/
+
+### Get all students
+GET {{ApiBaseUrl}}/students
 Accept: application/json
 
-###
+### Get a student by ID
+GET {{ApiBaseUrl}}/students/1
+Accept: application/json
+
+### Create a new student
+POST {{ApiBaseUrl}}/students
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+
+### Update a student by ID
+PUT {{ApiBaseUrl}}/students/1
+Content-Type: application/json
+
+{
+  "name": "John Does",
+  "email": "john.doe@gmail.com"
+}
+
+### Delete a student by ID
+DELETE {{ApiBaseUrl}}/students/1
