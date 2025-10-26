@@ -63,7 +63,7 @@ public class StudentService(
     {
         try
         {
-            var entity = student.ToEntity();
+            var entity = student.ToEntity(id: id);
             var updatedEntity = await repository.UpdateAsync(id, entity);
             return Result<StudentDto?>.Success(updatedEntity?.ToDto());
         }
