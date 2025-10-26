@@ -12,5 +12,9 @@ public class ZademyDbContext(DbContextOptions<ZademyDbContext> options) : DbCont
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<CourseInstanceEntity>()
+            .HasMany(ci => ci.Students)
+            .WithMany();
     }
 }
