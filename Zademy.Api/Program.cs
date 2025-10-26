@@ -3,6 +3,7 @@ using Zademy.Api.Endpoints;
 using Zademy.Business.Services;
 using Zademy.Business.Services.Contracts;
 using Zademy.Persistence.Data;
+using Zademy.Persistence.Entities;
 using Zademy.Persistence.Repositories;
 using Zademy.Persistence.Repositories.Contracts;
 
@@ -29,6 +30,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.Services.SeedInMemoryDatabase();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
