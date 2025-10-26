@@ -1,0 +1,90 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Zademy.Business.Mappers;
+using Zademy.Business.Services.Contracts;
+using Zademy.Domain.Courses;
+using Zademy.Domain.Utils;
+using Zademy.Persistence.Repositories.Contracts;
+
+namespace Zademy.Business.Services;
+
+public class CourseService(
+    ICourseRepository repository,
+    ILogger<CourseService> logger
+) : ICourseService
+{
+    public async Task<Result<List<CourseDto>>> GetAllAsync()
+    {
+        try
+        {
+            var entities = await repository.GetAllAsync();
+            var courses = entities
+                .Select(e => e.ToDto())
+                .ToList();
+            return Result<List<CourseDto>>.Success(courses);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("❌ -> Failed to get Courses: {}", ex.Message);
+            return Result<List<CourseDto>>.Failure("Failed to retrieve courses from the database.");
+        }
+    }
+
+    public async Task<Result<CourseDto?>> GetByIdAsync(int id)
+    {
+        try
+        {
+            var entity = await repository.GetByIdAsync(id);
+            return Result<CourseDto?>.Success(entity?.ToDto());
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("❌ -> Failed to get Course by ID {id}: {message}", id, ex.Message);
+            return Result<CourseDto?>.Failure("Failed to retrieve the course from the database.");
+        }
+    }
+
+    public async Task<Result<CourseDto>> CreateAsync(CourseInputDto course)
+    {
+        try
+        {
+            var entity = course.ToEntity();
+            var createdEntity = await repository.CreateAsync(entity);
+            return Result<CourseDto>.Success(createdEntity.ToDto());
+        }
+        catch (DbUpdateException ex)
+        {
+            logger.LogError("❌ -> Failed to create Course: {message}", ex.Message);
+            return Result<CourseDto>.Failure("Failed to create the course in the database.");
+        }
+    }
+
+    public async Task<Result<CourseDto?>> UpdateAsync(int id, CourseInputDto course)
+    {
+        try
+        {
+            var entity = course.ToEntity();
+            var updatedEntity = await repository.UpdateAsync(id, entity);
+            return Result<CourseDto?>.Success(updatedEntity?.ToDto());
+        }
+        catch (DbUpdateException ex)
+        {
+            logger.LogError("❌ -> Failed to update Course ID {id}: {message}", id, ex.Message);
+            return Result<CourseDto?>.Failure("Failed to update the course in the database.");
+        }
+    }
+
+    public async Task<Result<bool>> DeleteAsync(int id)
+    {
+        try
+        {
+            var deleted = await repository.DeleteAsync(id);
+            return Result<bool>.Success(deleted);
+        }
+        catch (DbUpdateException ex)
+        {
+            logger.LogError("❌ -> Failed to delete Course ID {id}: {message}", id, ex.Message);
+            return Result<bool>.Failure("Failed to delete the course from the database.");
+        }
+    }
+}
