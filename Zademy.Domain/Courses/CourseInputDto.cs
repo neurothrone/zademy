@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Zademy.Domain.Courses;
 
-public class CourseInputDto
+public record CourseInputDto
 {
     [Required]
     [MinLength(1)]
