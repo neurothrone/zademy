@@ -1,4 +1,5 @@
 using Zademy.Business.Services.Contracts;
+using Zademy.Domain.CourseInstances;
 
 namespace Zademy.Api.Endpoints;
 
@@ -25,17 +26,14 @@ public static class CourseInstanceHandlers
     }
 
     public static async Task<IResult> GetCoursesByDateRangeAsync(
-        ICourseInstanceService service,
-        DateTime? startDate = null,
-        DateTime? endDate = null)
+        [AsParameters] CourseInstanceDateRangeQuery query,
+        ICourseInstanceService service)
     {
-        if (startDate.HasValue ^ endDate.HasValue)
-            return TypedResults.BadRequest("Both startDate and endDate must be provided together.");
+        var result = await service.GetCoursesByDateRangeAsync(
+            DateTime.Parse(query.StartDate!),
+            DateTime.Parse(query.EndDate!)
+        );
 
-        if (!startDate.HasValue || !endDate.HasValue)
-            return TypedResults.BadRequest("Both startDate and endDate are required.");
-
-        var result = await service.GetCoursesByDateRangeAsync(startDate.Value, endDate.Value);
         return result.Match<IResult>(
             onSuccess: courses => TypedResults.Ok(courses),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
