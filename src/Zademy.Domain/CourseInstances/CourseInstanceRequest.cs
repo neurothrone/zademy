@@ -7,6 +7,7 @@ public record CourseInstanceRequest
 {
     [Required(ErrorMessage = "Start date is required")]
     [DateString]
+    [FutureDate]
     public string? StartDate { get; init; }
 
     [Required(ErrorMessage = "End date is required")]

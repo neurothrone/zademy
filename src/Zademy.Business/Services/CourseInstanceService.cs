@@ -10,7 +10,8 @@ using Zademy.Persistence.Repositories.Contracts;
 namespace Zademy.Business.Services;
 
 public class CourseInstanceService(
-    ICourseInstanceRepository repository,
+    ICourseRepository courseRepository,
+    ICourseInstanceRepository courseInstanceRepository,
     ILogger<CourseInstanceService> logger
 ) : ICourseInstanceService
 {
@@ -18,7 +19,7 @@ public class CourseInstanceService(
     {
         try
         {
-            var entities = await repository.GetAllAsync();
+            var entities = await courseInstanceRepository.GetAllAsync();
             var courseInstances = entities
                 .Select(e => e.ToDto())
                 .ToList();
@@ -36,7 +37,7 @@ public class CourseInstanceService(
     {
         try
         {
-            var entity = await repository.GetByIdAsync(id);
+            var entity = await courseInstanceRepository.GetByIdAsync(id);
             return Result<CourseInstanceDto?>.Success(entity?.ToDto());
         }
         catch (Exception ex)
@@ -51,7 +52,7 @@ public class CourseInstanceService(
     {
         try
         {
-            var entities = await repository.GetCoursesByStudentIdAsync(studentId);
+            var entities = await courseInstanceRepository.GetCoursesByStudentIdAsync(studentId);
             var courses = entities
                 .Select(e => e.ToDto())
                 .ToList();
@@ -69,7 +70,7 @@ public class CourseInstanceService(
     {
         try
         {
-            var entities = await repository.GetCoursesByDateRangeAsync(startDate, endDate);
+            var entities = await courseInstanceRepository.GetCoursesByDateRangeAsync(startDate, endDate);
             var courses = entities
                 .Select(e => e.ToDto())
                 .ToList();
@@ -87,7 +88,14 @@ public class CourseInstanceService(
     {
         try
         {
-            var createdEntity = await repository.CreateAsync(
+            var courseExists = await courseRepository.ExistsAsync(data.CourseId);
+            if (!courseExists)
+                return Result<CourseInstanceDto>.Failure(
+                    error: CourseInstanceError.CourseNotFound.ToMessage(),
+                    errorCode: nameof(CourseInstanceError.CourseNotFound)
+                );
+
+            var createdEntity = await courseInstanceRepository.CreateAsync(
                 data.CourseId,
                 data.StudentIds,
                 data.StartDate,
@@ -106,7 +114,14 @@ public class CourseInstanceService(
     {
         try
         {
-            var updatedEntity = await repository.UpdateAsync(
+            var courseExists = await courseRepository.ExistsAsync(data.CourseId);
+            if (!courseExists)
+                return Result<CourseInstanceDto?>.Failure(
+                    error: CourseInstanceError.CourseNotFound.ToMessage(),
+                    errorCode: nameof(CourseInstanceError.CourseNotFound)
+                );
+
+            var updatedEntity = await courseInstanceRepository.UpdateAsync(
                 id,
                 data.CourseId,
                 data.StudentIds,
@@ -126,7 +141,7 @@ public class CourseInstanceService(
     {
         try
         {
-            var deleted = await repository.DeleteAsync(id);
+            var deleted = await courseInstanceRepository.DeleteAsync(id);
             return Result<bool>.Success(deleted);
         }
         catch (DbUpdateException ex)
