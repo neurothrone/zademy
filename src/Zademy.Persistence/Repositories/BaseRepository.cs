@@ -14,16 +14,16 @@ public abstract class BaseRepository<TEntity> where TEntity : class
         _dbSet = Context.Set<TEntity>();
     }
 
-    public virtual async Task<List<TEntity>> GetAllAsync()
+    public virtual Task<List<TEntity>> GetAllAsync()
     {
-        return await _dbSet
+        return _dbSet
             .AsNoTracking()
             .ToListAsync();
     }
 
-    public virtual async Task<TEntity?> GetByIdAsync(int id)
+    public virtual Task<TEntity?> GetByIdAsync(int id)
     {
-        return await _dbSet.FindAsync(id);
+        return _dbSet.FindAsync(id).AsTask();
     }
 
     public virtual async Task<TEntity> CreateAsync(TEntity entity)
