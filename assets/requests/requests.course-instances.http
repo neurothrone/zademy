@@ -1,6 +1,7 @@
 @ApiUrl = https://localhost:7001/api/v1/course-instances
+@CourseId = 1
 @StudentId = 2
-@StartDate = 2025-09-26
+@StartDate = 2025-10-27
 @EndDate = 2025-12-31
 @CourseInstanceId = 4
 
@@ -26,9 +27,9 @@ POST {{ApiUrl}}
 Content-Type: application/json
 
 {
-  "startDate": "2025-09-01",
-  "endDate": "2025-12-15",
-  "courseId": 1,
+  "startDate": "{{StartDate}}",
+  "endDate": "{{EndDate}}",
+  "courseId": {{CourseId}},
   "studentIds": [
     1,
     2,
@@ -41,9 +42,9 @@ PUT {{ApiUrl}}/{{CourseInstanceId}}
 Content-Type: application/json
 
 {
-  "startDate": "2025-09-15",
-  "endDate": "2025-12-20",
-  "courseId": 1,
+  "startDate": "{{StartDate}}",
+  "endDate": "{{EndDate}}",
+  "courseId": {{CourseId}},
   "studentIds": [
     1,
     2
