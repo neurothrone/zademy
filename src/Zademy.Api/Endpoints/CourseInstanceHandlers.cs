@@ -1,3 +1,4 @@
+using Zademy.Business.Mappers;
 using Zademy.Business.Services.Contracts;
 using Zademy.Domain.CourseInstances;
 
@@ -53,19 +54,11 @@ public static class CourseInstanceHandlers
     }
 
     public static async Task<IResult> CreateCourseInstanceAsync(
-        CourseInstanceRequest courseInstance,
+        CourseInstanceRequest request,
         ICourseInstanceService service
     )
     {
-        var data = new CourseInstanceData
-        {
-            StartDate = DateTime.Parse(courseInstance.StartDate!),
-            EndDate = DateTime.Parse(courseInstance.EndDate!),
-            CourseId = courseInstance.CourseId,
-            StudentIds = courseInstance.StudentIds,
-        };
-        var result = await service.CreateAsync(data);
-
+        var result = await service.CreateAsync(request.ToData());
         return result.Match<IResult>(
             onSuccess: created => TypedResults.Created($"/api/v1/course-instances/{created.Id}", created),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
@@ -74,19 +67,11 @@ public static class CourseInstanceHandlers
 
     public static async Task<IResult> UpdateCourseInstanceAsync(
         int id,
-        CourseInstanceRequest courseInstance,
+        CourseInstanceRequest request,
         ICourseInstanceService service
     )
     {
-        var data = new CourseInstanceData
-        {
-            StartDate = DateTime.Parse(courseInstance.StartDate!),
-            EndDate = DateTime.Parse(courseInstance.EndDate!),
-            CourseId = courseInstance.CourseId,
-            StudentIds = courseInstance.StudentIds,
-        };
-        var result = await service.UpdateAsync(id, data);
-
+        var result = await service.UpdateAsync(id, request.ToData());
         return result.Match<IResult>(
             onSuccess: updated => TypedResults.Ok(updated),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
