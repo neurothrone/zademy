@@ -2,6 +2,7 @@
 @GradeId = 1
 @StudentId = 1
 @CourseInstanceId = 1
+@Grade = f
 
 
 ### Get all Grades
@@ -23,5 +24,5 @@ Content-Type: application/json
 {
   "studentId": {{StudentId}},
   "courseInstanceId": {{CourseInstanceId}},
-  "grade": "f"
+  "grade": "{{Grade}}"
 }
