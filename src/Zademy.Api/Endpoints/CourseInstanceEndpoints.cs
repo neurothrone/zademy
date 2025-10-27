@@ -1,3 +1,4 @@
+using Zademy.Api.Utils;
 using Zademy.Domain.CourseInstances;
 using Zademy.Domain.Courses;
 
@@ -22,6 +23,7 @@ public static class CourseInstanceEndpoints
             .Produces<List<CourseDto>>();
 
         group.MapGet("/courses", CourseInstanceHandlers.GetCoursesByDateRangeAsync)
+            .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Get courses by date range")
             .WithDescription("Get courses by date range")
             .Produces<List<CourseDto>>()
