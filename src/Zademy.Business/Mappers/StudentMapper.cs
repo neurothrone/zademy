@@ -5,7 +5,7 @@ namespace Zademy.Business.Mappers;
 
 public static class StudentMapper
 {
-    public static StudentResponse ToDto(this StudentEntity entity) => new()
+    public static StudentResponse ToResponse(this StudentEntity entity) => new()
     {
         Id = entity.Id,
         Name = entity.Name,

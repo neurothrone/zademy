@@ -19,7 +19,7 @@ public class CourseService(
         {
             var entities = await repository.GetAllAsync();
             var courses = entities
-                .Select(e => e.ToDto())
+                .Select(e => e.ToResponse())
                 .ToList();
             return Result<List<CourseResponse>>.Success(courses);
         }
@@ -35,7 +35,7 @@ public class CourseService(
         try
         {
             var entity = await repository.GetByIdAsync(id);
-            return Result<CourseResponse?>.Success(entity?.ToDto());
+            return Result<CourseResponse?>.Success(entity?.ToResponse());
         }
         catch (Exception ex)
         {
@@ -50,7 +50,7 @@ public class CourseService(
         {
             var entity = course.ToEntity();
             var createdEntity = await repository.CreateAsync(entity);
-            return Result<CourseResponse>.Success(createdEntity.ToDto());
+            return Result<CourseResponse>.Success(createdEntity.ToResponse());
         }
         catch (DbUpdateException ex)
         {
@@ -65,7 +65,7 @@ public class CourseService(
         {
             var entity = course.ToEntity(id: id);
             var updatedEntity = await repository.UpdateAsync(id, entity);
-            return Result<CourseResponse?>.Success(updatedEntity?.ToDto());
+            return Result<CourseResponse?>.Success(updatedEntity?.ToResponse());
         }
         catch (DbUpdateException ex)
         {

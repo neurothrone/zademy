@@ -20,7 +20,7 @@ public class CourseInstanceService(
         {
             var entities = await repository.GetAllAsync();
             var courseInstances = entities
-                .Select(e => e.ToDto())
+                .Select(e => e.ToResponse())
                 .ToList();
             return Result<List<CourseInstanceResponse>>.Success(courseInstances);
         }
@@ -37,7 +37,7 @@ public class CourseInstanceService(
         try
         {
             var entity = await repository.GetByIdAsync(id);
-            return Result<CourseInstanceResponse?>.Success(entity?.ToDto());
+            return Result<CourseInstanceResponse?>.Success(entity?.ToResponse());
         }
         catch (Exception ex)
         {
@@ -53,7 +53,7 @@ public class CourseInstanceService(
         {
             var entities = await repository.GetCoursesByStudentIdAsync(studentId);
             var courses = entities
-                .Select(e => e.ToDto())
+                .Select(e => e.ToResponse())
                 .ToList();
             return Result<List<CourseResponse>>.Success(courses);
         }
@@ -71,7 +71,7 @@ public class CourseInstanceService(
         {
             var entities = await repository.GetCoursesByDateRangeAsync(startDate, endDate);
             var courses = entities
-                .Select(e => e.ToDto())
+                .Select(e => e.ToResponse())
                 .ToList();
             return Result<List<CourseResponse>>.Success(courses);
         }
@@ -93,7 +93,7 @@ public class CourseInstanceService(
                 data.StartDate,
                 data.EndDate
             );
-            return Result<CourseInstanceResponse>.Success(createdEntity.ToDto());
+            return Result<CourseInstanceResponse>.Success(createdEntity.ToResponse());
         }
         catch (Exception ex) when (ex is InvalidOperationException or DbUpdateException)
         {
@@ -113,7 +113,7 @@ public class CourseInstanceService(
                 data.StartDate,
                 data.EndDate
             );
-            return Result<CourseInstanceResponse?>.Success(updatedEntity?.ToDto());
+            return Result<CourseInstanceResponse?>.Success(updatedEntity?.ToResponse());
         }
         catch (Exception ex) when (ex is InvalidOperationException or DbUpdateException)
         {
