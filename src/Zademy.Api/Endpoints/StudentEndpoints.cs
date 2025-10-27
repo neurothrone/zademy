@@ -13,24 +13,24 @@ public static class StudentEndpoints
         group.MapGet("", StudentHandlers.GetStudentsAsync)
             .WithSummary("Get all students")
             .WithDescription("Get all students")
-            .Produces<List<StudentResponse>>();
+            .Produces<List<StudentDto>>();
 
         group.MapGet("{id:int:min(0)}", StudentHandlers.GetStudentByIdAsync)
             .WithSummary("Get student by id")
             .WithDescription("Get student by id")
-            .Produces<StudentResponse>()
+            .Produces<StudentDto>()
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapPost("", StudentHandlers.CreateStudentAsync)
             .WithSummary("Create a new student")
             .WithDescription("Create a new student")
-            .Produces<StudentResponse>(StatusCodes.Status201Created)
+            .Produces<StudentDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id:int:min(0)}", StudentHandlers.UpdateStudentAsync)
             .WithSummary("Update a student by id")
             .WithDescription("Update a student by id")
-            .Produces<StudentResponse>()
+            .Produces<StudentDto>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound);
 

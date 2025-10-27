@@ -1,6 +1,6 @@
 namespace Zademy.Domain.Grades;
 
-public record StudentGradeWithCourseResponse
+public record CourseGradeDto
 {
     public int GradeId { get; init; }
     public required string GradeValue { get; init; }

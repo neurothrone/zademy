@@ -22,14 +22,14 @@ public static class GradeHandlers
         IGradeService gradeService)
     {
         var studentResult = await studentService.GetByIdAsync(id);
-        if (studentResult is not SuccessResult<StudentResponse> { Value: not null and var student })
+        if (studentResult is not SuccessResult<StudentDto> { Value: not null and var student })
             return TypedResults.NotFound();
 
 
         var gradesResult = await gradeService.GetGradesByStudentIdAsync(id);
         return gradesResult.Match<IResult>(
             onSuccess: grades => TypedResults.Ok(
-                new StudentGradesResult
+                new StudentGradesDto
                 {
                     StudentId = id,
                     StudentName = student.Name,

@@ -15,39 +15,39 @@ public static class CourseInstanceEndpoints
         group.MapGet("", CourseInstanceHandlers.GetCourseInstancesAsync)
             .WithSummary("Get all course instances")
             .WithDescription("Get all course instances")
-            .Produces<List<CourseInstanceResponse>>();
+            .Produces<List<CourseInstanceDto>>();
 
         group.MapGet("/{id:int:min(0)}", CourseInstanceHandlers.GetCourseInstanceByIdAsync)
             .WithSummary("Get a course instance by id")
             .WithDescription("Get a course instance by id")
-            .Produces<CourseInstanceResponse>()
+            .Produces<CourseInstanceDto>()
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapGet("/students/{id:int:min(0)}/courses", CourseInstanceHandlers.GetCoursesByStudentIdAsync)
             .WithSummary("Get courses by student ID")
             .WithDescription("Get courses assigned to a specific student")
-            .Produces<List<CourseResponse>>()
+            .Produces<List<CourseDto>>()
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapGet("/courses", CourseInstanceHandlers.GetCoursesByDateRangeAsync)
             .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Get courses by date range")
             .WithDescription("Get courses by date range")
-            .Produces<List<CourseResponse>>()
+            .Produces<List<CourseDto>>()
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPost("", CourseInstanceHandlers.CreateCourseInstanceAsync)
             .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Create a new course instance")
             .WithDescription("Create a new course instance")
-            .Produces<CourseInstanceResponse>(StatusCodes.Status201Created)
+            .Produces<CourseInstanceDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id:int:min(0)}", CourseInstanceHandlers.UpdateCourseInstanceAsync)
             .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Update a course instance by id")
             .WithDescription("Update a course instance by id")
-            .Produces<CourseInstanceResponse>()
+            .Produces<CourseInstanceDto>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound);
 

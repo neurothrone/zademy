@@ -5,6 +5,6 @@ namespace Zademy.Business.Services.Contracts;
 
 public interface IGradeService
 {
-    Task<Result<List<GradeResponse>>> GetAllAsync();
-    Task<Result<List<StudentGradeWithCourseResponse>>> GetGradesByStudentIdAsync(int studentId);
+    Task<Result<List<GradeDto>>> GetAllAsync();
+    Task<Result<List<CourseGradeDto>>> GetGradesByStudentIdAsync(int studentId);
 }

@@ -5,13 +5,13 @@ namespace Zademy.Business.Mappers;
 
 public static class GradeMapper
 {
-    public static GradeResponse ToItemResponse(this GradeEntity entity) => new()
+    public static GradeDto ToGradeDto(this GradeEntity entity) => new()
     {
         Id = entity.Id,
         Value = entity.Value
     };
 
-    public static StudentGradeWithCourseResponse ToDetailResponse(this GradeEntity entity) => new()
+    public static CourseGradeDto ToCourseGradeDto(this GradeEntity entity) => new()
     {
         GradeId = entity.Id,
         GradeValue = entity.Value,

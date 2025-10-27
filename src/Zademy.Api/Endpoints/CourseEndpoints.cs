@@ -13,24 +13,24 @@ public static class CourseEndpoints
         group.MapGet("", CourseHandlers.GetCoursesAsync)
             .WithSummary("Get all courses")
             .WithDescription("Get all courses")
-            .Produces<List<CourseResponse>>();
+            .Produces<List<CourseDto>>();
 
         group.MapGet("{id:int:min(0)}", CourseHandlers.GetCourseByIdAsync)
             .WithSummary("Get course by id")
             .WithDescription("Get course by id")
-            .Produces<CourseResponse>()
+            .Produces<CourseDto>()
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapPost("", CourseHandlers.CreateCourseAsync)
             .WithSummary("Create a new course")
             .WithDescription("Create a new course")
-            .Produces<CourseResponse>(StatusCodes.Status201Created)
+            .Produces<CourseDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id:int:min(0)}", CourseHandlers.UpdateCourseAsync)
             .WithSummary("Update a course by id")
             .WithDescription("Update a course by id")
-            .Produces<CourseResponse>()
+            .Produces<CourseDto>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound);
 
