@@ -95,7 +95,7 @@ public class CourseInstanceService(
             );
             return Result<CourseInstanceResponse>.Success(createdEntity.ToDto());
         }
-        catch (DbUpdateException ex)
+        catch (Exception ex) when (ex is InvalidOperationException or DbUpdateException)
         {
             logger.LogError("❌ -> Failed to create Course Instance: {message}", ex.Message);
             return Result<CourseInstanceResponse>.Failure("Failed to create the course instance in the database.");
@@ -129,7 +129,7 @@ public class CourseInstanceService(
             var deleted = await repository.DeleteAsync(id);
             return Result<bool>.Success(deleted);
         }
-        catch (Exception ex) when (ex is InvalidOperationException or DbUpdateException)
+        catch (DbUpdateException ex)
         {
             logger.LogError("❌ -> Failed to delete Course Instance ID {id}: {message}", id, ex.Message);
             return Result<bool>.Failure("Failed to delete the course instance from the database.");
