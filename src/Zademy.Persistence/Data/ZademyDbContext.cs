@@ -14,6 +14,7 @@ public class ZademyDbContext(DbContextOptions<ZademyDbContext> options) : DbCont
     {
         base.OnModelCreating(modelBuilder);
 
+        // Configure CourseInstanceEntity
         modelBuilder.Entity<CourseInstanceEntity>()
             .HasMany(ci => ci.Students)
             .WithMany();
