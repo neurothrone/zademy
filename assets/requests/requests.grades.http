@@ -1,11 +1,27 @@
 @ApiUrl = https://localhost:7001/api/v1/grades
+@GradeId = 1
 @StudentId = 1
+@CourseInstanceId = 1
 
 
 ### Get all Grades
 GET {{ApiUrl}}
 Accept: application/json
 
+### Get Grade by ID
+GET {{ApiUrl}}/{{GradeId}}
+Accept: application/json
+
 ### Get Grades by Student ID
 GET {{ApiUrl}}/students/{{StudentId}}
 Accept: application/json
+
+### Create Grade
+POST {{ApiUrl}}
+Content-Type: application/json
+
+{
+  "studentId": {{StudentId}},
+  "courseInstanceId": {{CourseInstanceId}},
+  "grade": "f"
+}
