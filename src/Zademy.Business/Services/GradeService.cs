@@ -18,7 +18,7 @@ public class GradeService(
         {
             var entities = await repository.GetAllAsync();
             var grades = entities
-                .Select(g => g.ToResponse())
+                .Select(e => e.ToItemResponse())
                 .ToList();
             return Result<List<GradeResponse>>.Success(grades);
         }
@@ -35,7 +35,7 @@ public class GradeService(
         {
             var entities = await repository.GetGradesByStudentIdAsync(studentId);
             var gradesWithCourses = entities
-                .Select(g => g.ToSummaryResponse())
+                .Select(e => e.ToDetailResponse())
                 .ToList();
             return Result<List<StudentGradeWithCourseResponse>>.Success(gradesWithCourses);
         }
