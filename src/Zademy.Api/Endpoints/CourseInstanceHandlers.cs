@@ -39,4 +39,53 @@ public static class CourseInstanceHandlers
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
         );
     }
+
+    public static async Task<IResult> CreateCourseInstanceAsync(
+        CourseInstanceInputDto courseInstance,
+        ICourseInstanceService service
+    )
+    {
+        var result = await service.CreateAsync(
+            DateTime.Parse(courseInstance.StartDate!),
+            DateTime.Parse(courseInstance.EndDate!),
+            courseInstance.CourseId,
+            courseInstance.StudentIds
+        );
+
+        return result.Match<IResult>(
+            onSuccess: created => TypedResults.Created($"/api/v1/course-instances/{created.Id}", created),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
+    }
+
+    public static async Task<IResult> UpdateCourseInstanceAsync(
+        int id,
+        CourseInstanceInputDto courseInstance,
+        ICourseInstanceService service
+    )
+    {
+        var result = await service.UpdateAsync(
+            id,
+            DateTime.Parse(courseInstance.StartDate!),
+            DateTime.Parse(courseInstance.EndDate!),
+            courseInstance.CourseId,
+            courseInstance.StudentIds
+        );
+
+        return result.Match<IResult>(
+            onSuccess: updated => TypedResults.Ok(updated),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
+    }
+
+    public static async Task<IResult> DeleteCourseInstanceAsync(int id, ICourseInstanceService service)
+    {
+        var result = await service.DeleteAsync(id);
+        return result.Match<IResult>(
+            onSuccess: deleted => deleted
+                ? TypedResults.NoContent()
+                : TypedResults.NotFound(),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
+    }
 }
