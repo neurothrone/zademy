@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Zademy.Api.Utils;
+namespace Zademy.Api.Filters;
 
 public class CustomOrderingDocumentFilter : IDocumentFilter
 {

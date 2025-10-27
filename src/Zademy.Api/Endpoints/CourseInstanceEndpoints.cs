@@ -1,4 +1,4 @@
-using Zademy.Api.Utils;
+using Zademy.Api.Filters;
 using Zademy.Domain.CourseInstances;
 using Zademy.Domain.Courses;
 

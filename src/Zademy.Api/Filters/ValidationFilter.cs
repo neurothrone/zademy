@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Zademy.Api.Utils;
+namespace Zademy.Api.Filters;
 
 public class ValidationFilter : IEndpointFilter
 {

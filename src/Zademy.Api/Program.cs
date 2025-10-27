@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Zademy.Api.Endpoints;
-using Zademy.Api.Utils;
+using Zademy.Api.Filters;
 using Zademy.Business.Services;
 using Zademy.Business.Services.Contracts;
 using Zademy.Persistence.Data;
