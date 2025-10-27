@@ -2,9 +2,15 @@
 @StudentId = 2
 @StartDate = 2025-09-26
 @EndDate = 2025-12-31
+@CourseInstanceId = 4
+
 
 ### Get all Course Instances
 GET {{ApiUrl}}
+Accept: application/json
+
+### Get Course Instance by ID
+GET {{ApiUrl}}/{{CourseInstanceId}}
 Accept: application/json
 
 ### Get Courses by Student ID
@@ -14,3 +20,35 @@ Accept: application/json
 ### Get Courses by Date Range
 GET {{ApiUrl}}/courses?startDate={{StartDate}}&endDate={{EndDate}}
 Accept: application/json
+
+### Create Course Instance
+POST {{ApiUrl}}
+Content-Type: application/json
+
+{
+  "startDate": "2025-09-01",
+  "endDate": "2025-12-15",
+  "courseId": 1,
+  "studentIds": [
+    1,
+    2,
+    3
+  ]
+}
+
+### Update Course Instance
+PUT {{ApiUrl}}/{{CourseInstanceId}}
+Content-Type: application/json
+
+{
+  "startDate": "2025-09-15",
+  "endDate": "2025-12-20",
+  "courseId": 1,
+  "studentIds": [
+    1,
+    2
+  ]
+}
+
+### Delete Course Instance
+DELETE {{ApiUrl}}/{{CourseInstanceId}}
