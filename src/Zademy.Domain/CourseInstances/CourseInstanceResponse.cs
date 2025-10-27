@@ -3,7 +3,7 @@ using Zademy.Domain.Students;
 
 namespace Zademy.Domain.CourseInstances;
 
-public record CourseInstanceDto
+public record CourseInstanceResponse
 {
     public int Id { get; set; }
     public DateTime StartDate { get; set; }

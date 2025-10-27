@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Zademy.Business.Mappers;
 using Zademy.Business.Services.Contracts;
@@ -13,7 +14,7 @@ public class CourseInstanceService(
     ILogger<CourseInstanceService> logger
 ) : ICourseInstanceService
 {
-    public async Task<Result<List<CourseInstanceDto>>> GetAllAsync()
+    public async Task<Result<List<CourseInstanceResponse>>> GetAllAsync()
     {
         try
         {
@@ -21,18 +22,29 @@ public class CourseInstanceService(
             var courseInstances = entities
                 .Select(e => e.ToDto())
                 .ToList();
-            return Result<List<CourseInstanceDto>>.Success(courseInstances);
+            return Result<List<CourseInstanceResponse>>.Success(courseInstances);
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get Course Instances: {message}", ex.Message);
-            return Result<List<CourseInstanceDto>>.Failure("Failed to retrieve course instances from the database.");
+            return Result<List<CourseInstanceResponse>>.Failure(
+                "Failed to retrieve course instances from the database.");
         }
     }
 
-    public Task<Result<CourseInstanceDto?>> GetByIdAsync(int id)
+    public async Task<Result<CourseInstanceResponse?>> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var entity = await repository.GetByIdAsync(id);
+            return Result<CourseInstanceResponse?>.Success(entity?.ToDto());
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("❌ -> Failed to get Course Instance by ID {id}: {message}", id, ex.Message);
+            return Result<CourseInstanceResponse?>.Failure(
+                "Failed to retrieve the course instance from the database.");
+        }
     }
 
     public async Task<Result<List<CourseDto>>> GetCoursesByStudentIdAsync(int studentId)
@@ -71,18 +83,56 @@ public class CourseInstanceService(
         }
     }
 
-    public Task<Result<CourseInstanceDto>> CreateAsync(CourseInstanceInputDto courseInstance)
+    public async Task<Result<CourseInstanceResponse>> CreateAsync(CourseInstanceData data)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var createdEntity = await repository.CreateAsync(
+                data.CourseId,
+                data.StudentIds,
+                data.StartDate,
+                data.EndDate
+            );
+            return Result<CourseInstanceResponse>.Success(createdEntity.ToDto());
+        }
+        catch (DbUpdateException ex)
+        {
+            logger.LogError("❌ -> Failed to create Course Instance: {message}", ex.Message);
+            return Result<CourseInstanceResponse>.Failure("Failed to create the course instance in the database.");
+        }
     }
 
-    public Task<Result<CourseInstanceDto?>> UpdateAsync(int id, CourseInstanceInputDto courseInstance)
+    public async Task<Result<CourseInstanceResponse?>> UpdateAsync(int id, CourseInstanceData data)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var updatedEntity = await repository.UpdateAsync(
+                id,
+                data.CourseId,
+                data.StudentIds,
+                data.StartDate,
+                data.EndDate
+            );
+            return Result<CourseInstanceResponse?>.Success(updatedEntity?.ToDto());
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or DbUpdateException)
+        {
+            logger.LogError("❌ -> Failed to update Course Instance ID {id}: {message}", id, ex.Message);
+            return Result<CourseInstanceResponse?>.Failure("Failed to update the course instance in the database.");
+        }
     }
 
-    public Task<Result<bool>> DeleteAsync(int id)
+    public async Task<Result<bool>> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var deleted = await repository.DeleteAsync(id);
+            return Result<bool>.Success(deleted);
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or DbUpdateException)
+        {
+            logger.LogError("❌ -> Failed to delete Course Instance ID {id}: {message}", id, ex.Message);
+            return Result<bool>.Failure("Failed to delete the course instance from the database.");
+        }
     }
 }

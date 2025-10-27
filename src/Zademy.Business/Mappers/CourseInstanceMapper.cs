@@ -5,7 +5,7 @@ namespace Zademy.Business.Mappers;
 
 public static class CourseInstanceMapper
 {
-    public static CourseInstanceDto ToDto(this CourseInstanceEntity entity) => new()
+    public static CourseInstanceResponse ToDto(this CourseInstanceEntity entity) => new()
     {
         Id = entity.Id,
         StartDate = entity.StartDate,

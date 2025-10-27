@@ -15,7 +15,13 @@ public static class CourseInstanceEndpoints
         group.MapGet("", CourseInstanceHandlers.GetCourseInstancesAsync)
             .WithSummary("Get all course instances")
             .WithDescription("Get all course instances")
-            .Produces<List<CourseInstanceDto>>();
+            .Produces<List<CourseInstanceResponse>>();
+
+        group.MapGet("/{id:int:min(0)}", CourseInstanceHandlers.GetCourseInstanceByIdAsync)
+            .WithSummary("Get a course instance by id")
+            .WithDescription("Get a course instance by id")
+            .Produces<CourseInstanceResponse>()
+            .Produces(StatusCodes.Status404NotFound);
 
         group.MapGet("/students/{id:int:min(0)}/courses", CourseInstanceHandlers.GetCoursesByStudentIdAsync)
             .WithSummary("Get courses by student ID")
@@ -34,14 +40,14 @@ public static class CourseInstanceEndpoints
             .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Create a new course instance")
             .WithDescription("Create a new course instance")
-            .Produces<CourseInstanceDto>(StatusCodes.Status201Created)
+            .Produces<CourseInstanceResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id:int:min(0)}", CourseInstanceHandlers.UpdateCourseInstanceAsync)
             .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Update a course instance by id")
             .WithDescription("Update a course instance by id")
-            .Produces<CourseInstanceDto>()
+            .Produces<CourseInstanceResponse>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound);
 

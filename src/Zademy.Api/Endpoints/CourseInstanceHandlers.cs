@@ -14,6 +14,18 @@ public static class CourseInstanceHandlers
         );
     }
 
+    public static async Task<IResult> GetCourseInstanceByIdAsync(int id, ICourseInstanceService service)
+    {
+        var result = await service.GetByIdAsync(id);
+        return result.Match<IResult>(
+            onSuccess: courseInstance =>
+                courseInstance is not null
+                    ? TypedResults.Ok(courseInstance)
+                    : TypedResults.NotFound(),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
+    }
+
     public static async Task<IResult> GetCoursesByStudentIdAsync(
         int id,
         ICourseInstanceService service)
@@ -41,16 +53,18 @@ public static class CourseInstanceHandlers
     }
 
     public static async Task<IResult> CreateCourseInstanceAsync(
-        CourseInstanceInputDto courseInstance,
+        CourseInstanceRequest courseInstance,
         ICourseInstanceService service
     )
     {
-        var result = await service.CreateAsync(
-            DateTime.Parse(courseInstance.StartDate!),
-            DateTime.Parse(courseInstance.EndDate!),
-            courseInstance.CourseId,
-            courseInstance.StudentIds
-        );
+        var data = new CourseInstanceData
+        {
+            StartDate = DateTime.Parse(courseInstance.StartDate!),
+            EndDate = DateTime.Parse(courseInstance.EndDate!),
+            CourseId = courseInstance.CourseId,
+            StudentIds = courseInstance.StudentIds,
+        };
+        var result = await service.CreateAsync(data);
 
         return result.Match<IResult>(
             onSuccess: created => TypedResults.Created($"/api/v1/course-instances/{created.Id}", created),
@@ -60,17 +74,18 @@ public static class CourseInstanceHandlers
 
     public static async Task<IResult> UpdateCourseInstanceAsync(
         int id,
-        CourseInstanceInputDto courseInstance,
+        CourseInstanceRequest courseInstance,
         ICourseInstanceService service
     )
     {
-        var result = await service.UpdateAsync(
-            id,
-            DateTime.Parse(courseInstance.StartDate!),
-            DateTime.Parse(courseInstance.EndDate!),
-            courseInstance.CourseId,
-            courseInstance.StudentIds
-        );
+        var data = new CourseInstanceData
+        {
+            StartDate = DateTime.Parse(courseInstance.StartDate!),
+            EndDate = DateTime.Parse(courseInstance.EndDate!),
+            CourseId = courseInstance.CourseId,
+            StudentIds = courseInstance.StudentIds,
+        };
+        var result = await service.UpdateAsync(id, data);
 
         return result.Match<IResult>(
             onSuccess: updated => TypedResults.Ok(updated),

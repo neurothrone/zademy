@@ -6,8 +6,22 @@ public interface ICourseInstanceRepository
 {
     Task<List<CourseInstanceEntity>> GetAllAsync();
     Task<CourseInstanceEntity?> GetByIdAsync(int id);
-    Task<CourseInstanceEntity> CreateAsync(CourseInstanceEntity courseInstance);
-    Task<CourseInstanceEntity?> UpdateAsync(int id, CourseInstanceEntity courseInstance);
+
+    Task<CourseInstanceEntity> CreateAsync(
+        int courseId,
+        List<int> studentIds,
+        DateTime startDate,
+        DateTime endDate
+    );
+
+    Task<CourseInstanceEntity?> UpdateAsync(
+        int courseInstanceId,
+        int courseId,
+        List<int> studentIds,
+        DateTime startDate,
+        DateTime endDate
+    );
+
     Task<bool> DeleteAsync(int id);
 
     Task<List<CourseEntity>> GetCoursesByStudentIdAsync(int studentId);

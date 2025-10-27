@@ -3,7 +3,7 @@ using Zademy.Domain.Validation;
 
 namespace Zademy.Domain.CourseInstances;
 
-public record CourseInstanceInputDto
+public record CourseInstanceRequest
 {
     [Required(ErrorMessage = "Start date is required")]
     [DateString]
