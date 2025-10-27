@@ -80,12 +80,18 @@ public class GradeService(
             // Check if CourseInstance exists
             var courseExists = await courseInstanceRepository.ExistsAsync(request.CourseInstanceId);
             if (!courseExists)
-                return Result<GradeDto>.Failure(GradeError.CourseInstanceNotFound.ToMessage());
+                return Result<GradeDto>.Failure(
+                    error: GradeError.CourseInstanceNotFound.ToMessage(),
+                    errorCode: nameof(GradeError.CourseInstanceNotFound)
+                );
 
             // Check if Grade already exists
             var gradeExists = await gradeRepository.GradeExistsAsync(request.StudentId, request.CourseInstanceId);
             if (gradeExists)
-                return Result<GradeDto>.Failure(GradeError.GradeAlreadyExists.ToMessage());
+                return Result<GradeDto>.Failure(
+                    error: GradeError.GradeAlreadyExists.ToMessage(),
+                    errorCode: nameof(GradeError.GradeAlreadyExists)
+                );
 
             // Create Grade
             var created = await gradeRepository.CreateAsync(

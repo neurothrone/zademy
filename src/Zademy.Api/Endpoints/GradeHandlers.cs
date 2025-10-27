@@ -59,10 +59,22 @@ public static class GradeHandlers
                 return errorCode switch
                 {
                     nameof(GradeError.StudentNotFound) or nameof(GradeError.CourseInstanceNotFound)
-                        => TypedResults.NotFound(error),
+                        => TypedResults.Problem(
+                            detail: error,
+                            statusCode: StatusCodes.Status404NotFound,
+                            title: "Resource Not Found"
+                        ),
                     nameof(GradeError.GradeAlreadyExists)
-                        => TypedResults.Conflict(error),
-                    _ => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+                        => TypedResults.Problem(
+                            detail: error,
+                            statusCode: StatusCodes.Status409Conflict,
+                            title: "Conflict"
+                        ),
+                    _ => TypedResults.Problem(
+                        detail: error,
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        title: "An error occurred"
+                    )
                 };
             }
         );
