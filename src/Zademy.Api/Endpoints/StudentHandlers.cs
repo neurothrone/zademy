@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Zademy.Business.Services.Contracts;
 using Zademy.Domain.Students;
 
@@ -28,9 +27,6 @@ public static class StudentHandlers
 
     public static async Task<IResult> CreateStudentAsync(StudentRequest student, IStudentService service)
     {
-        if (!Validator.TryValidateObject(student, new ValidationContext(student), null, true))
-            return TypedResults.BadRequest("Invalid student data.");
-
         var result = await service.CreateAsync(student);
         return result.Match<IResult>(
             onSuccess: createdStudent => TypedResults.Created($"/api/v1/students/{createdStudent.Id}", createdStudent),
@@ -40,9 +36,6 @@ public static class StudentHandlers
 
     public static async Task<IResult> UpdateStudentAsync(int id, StudentRequest student, IStudentService service)
     {
-        if (!Validator.TryValidateObject(student, new ValidationContext(student), null, true))
-            return TypedResults.BadRequest("Invalid student data.");
-
         var result = await service.UpdateAsync(id, student);
         return result.Match<IResult>(
             onSuccess: updatedStudent => updatedStudent is not null

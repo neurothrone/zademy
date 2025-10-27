@@ -1,3 +1,4 @@
+using Zademy.Api.Filters;
 using Zademy.Domain.Students;
 
 namespace Zademy.Api.Endpoints;
@@ -22,12 +23,14 @@ public static class StudentEndpoints
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapPost("", StudentHandlers.CreateStudentAsync)
+            .AddEndpointFilter<ValidationFilter>()
             .WithSummary("Create a new student")
             .WithDescription("Create a new student")
             .Produces<StudentDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id:int:min(0)}", StudentHandlers.UpdateStudentAsync)
+            .AddEndpointFilter<ValidationFilter>()
             .WithSummary("Update a student by id")
             .WithDescription("Update a student by id")
             .Produces<StudentDto>()
