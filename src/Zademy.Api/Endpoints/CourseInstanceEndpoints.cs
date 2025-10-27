@@ -30,21 +30,21 @@ public static class CourseInstanceEndpoints
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapGet("/courses", CourseInstanceHandlers.GetCoursesByDateRangeAsync)
-            .AddEndpointFilter<ValidateModelFilter>()
+            .AddEndpointFilter<ValidationFilter>()
             .WithSummary("Get courses by date range")
             .WithDescription("Get courses by date range")
             .Produces<List<CourseDto>>()
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPost("", CourseInstanceHandlers.CreateCourseInstanceAsync)
-            .AddEndpointFilter<ValidateModelFilter>()
+            .AddEndpointFilter<ValidationFilter>()
             .WithSummary("Create a new course instance")
             .WithDescription("Create a new course instance")
             .Produces<CourseInstanceDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPut("{id:int:min(0)}", CourseInstanceHandlers.UpdateCourseInstanceAsync)
-            .AddEndpointFilter<ValidateModelFilter>()
+            .AddEndpointFilter<ValidationFilter>()
             .WithSummary("Update a course instance by id")
             .WithDescription("Update a course instance by id")
             .Produces<CourseInstanceDto>()

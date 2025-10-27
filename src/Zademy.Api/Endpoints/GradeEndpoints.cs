@@ -29,7 +29,7 @@ public static class GradeEndpoints
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapPost("", GradeHandlers.CreateGradeAsync)
-            .AddEndpointFilter<ValidateModelFilter>()
+            .AddEndpointFilter<ValidationFilter>()
             .WithSummary("Create a new grade")
             .WithDescription("Create a new grade")
             .Produces<GradeDto>(StatusCodes.Status201Created)

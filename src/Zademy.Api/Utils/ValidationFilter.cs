@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Zademy.Api.Utils;
 
-public class ValidateModelFilter : IEndpointFilter
+public class ValidationFilter : IEndpointFilter
 {
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
