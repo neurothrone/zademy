@@ -16,6 +16,15 @@ public static class GradeHandlers
         );
     }
 
+    public static async Task<IResult> GetGradeById(int id, IGradeService service)
+    {
+        var result = await service.GetByIdAsync(id);
+        return result.Match<IResult>(
+            onSuccess: grade => grade is not null ? TypedResults.Ok(grade) : TypedResults.NotFound(),
+            onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
+    }
+
     public static async Task<IResult> GetGradesByStudentIdAsync(
         int id,
         IStudentService studentService,
@@ -36,6 +45,26 @@ public static class GradeHandlers
                     Grades = grades
                 }),
             onFailure: error => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+        );
+    }
+
+    public static async Task<IResult> CreateGradeAsync(GradeRequest request, IGradeService service)
+    {
+        var result = await service.CreateAsync(request);
+        return result.Match<IResult>(
+            onSuccess: grade => TypedResults.Created($"/grades/{grade.Id}", grade),
+            onFailure: error =>
+            {
+                var errorCode = (result as FailureResult<GradeDto>)?.ErrorCode;
+                return errorCode switch
+                {
+                    nameof(GradeError.StudentNotFound) or nameof(GradeError.CourseInstanceNotFound)
+                        => TypedResults.NotFound(error),
+                    nameof(GradeError.GradeAlreadyExists)
+                        => TypedResults.Conflict(error),
+                    _ => TypedResults.Problem(error, statusCode: StatusCodes.Status500InternalServerError)
+                };
+            }
         );
     }
 }

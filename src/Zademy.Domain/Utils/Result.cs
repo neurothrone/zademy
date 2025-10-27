@@ -10,6 +10,9 @@ public abstract class Result<T>
 
     public static Result<T> Success(T value) => new SuccessResult<T>(value);
     public static Result<T> Failure(string error) => new FailureResult<T>(error);
+
+    public static Result<T> Failure(string error, string errorCode) =>
+        new FailureResult<T>(error) { ErrorCode = errorCode };
 }
 
 public class SuccessResult<T>(T value) : Result<T>
@@ -34,6 +37,7 @@ public class FailureResult<T>(string error) : Result<T>
     public override bool IsSuccess => false;
     public override bool IsFailure => true;
     public string Error => error;
+    public string? ErrorCode { get; init; }
 
     public override TResult Match<TResult>(Func<T, TResult> onSuccess, Func<string, TResult> onFailure)
     {

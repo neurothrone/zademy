@@ -9,4 +9,5 @@ public interface IStudentRepository
     Task<StudentEntity> CreateAsync(StudentEntity student);
     Task<StudentEntity?> UpdateAsync(int id, StudentEntity student);
     Task<bool> DeleteAsync(int id);
+    Task<bool> ExistsAsync(int id);
 }

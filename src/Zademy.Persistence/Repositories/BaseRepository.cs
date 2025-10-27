@@ -56,4 +56,9 @@ public abstract class BaseRepository<TEntity> where TEntity : class
         await Context.SaveChangesAsync();
         return true;
     }
+
+    public virtual async Task<bool> ExistsAsync(int id)
+    {
+        return await _dbSet.FindAsync(id) != null;
+    }
 }
