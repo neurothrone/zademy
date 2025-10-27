@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Zademy.Business.Services.Contracts;
 using Zademy.Domain.Courses;
 
@@ -28,9 +27,6 @@ public static class CourseHandlers
 
     public static async Task<IResult> CreateCourseAsync(CourseRequest course, ICourseService service)
     {
-        if (!Validator.TryValidateObject(course, new ValidationContext(course), null, true))
-            return TypedResults.BadRequest("Invalid course data.");
-
         var result = await service.CreateAsync(course);
         return result.Match<IResult>(
             onSuccess: createdCourse => TypedResults.Created($"/api/v1/courses/{createdCourse.Id}", createdCourse),
@@ -40,9 +36,6 @@ public static class CourseHandlers
 
     public static async Task<IResult> UpdateCourseAsync(int id, CourseRequest course, ICourseService service)
     {
-        if (!Validator.TryValidateObject(course, new ValidationContext(course), null, true))
-            return TypedResults.BadRequest("Invalid course data.");
-
         var result = await service.UpdateAsync(id, course);
         return result.Match<IResult>(
             onSuccess: updatedCourse => updatedCourse is not null
