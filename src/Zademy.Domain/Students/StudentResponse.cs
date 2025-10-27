@@ -1,6 +1,6 @@
 namespace Zademy.Domain.Students;
 
-public record StudentDto
+public record StudentResponse
 {
     public int Id { get; init; }
     public required string Name { get; init; }

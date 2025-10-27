@@ -13,12 +13,12 @@ public static class GradeEndpoints
         group.MapGet("", GradeHandlers.GetGradesAsync)
             .WithSummary("Get all grades")
             .WithDescription("Get all grades")
-            .Produces<List<GradeDto>>();
+            .Produces<List<GradeResponse>>();
 
         group.MapGet("/students/{id:min(0)}", GradeHandlers.GetGradesByStudentIdAsync)
             .WithSummary("Get grades by student ID")
             .WithDescription("Get grades by student ID")
-            .Produces<List<StudentGradeWithCourseDto>>()
+            .Produces<List<StudentGradeWithCourseResponse>>()
             .Produces(StatusCodes.Status404NotFound);
     }
 }

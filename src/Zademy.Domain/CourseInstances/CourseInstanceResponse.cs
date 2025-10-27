@@ -8,6 +8,6 @@ public record CourseInstanceResponse
     public int Id { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public required CourseDto Course { get; set; }
-    public List<StudentDto> Students { get; set; } = [];
+    public required CourseResponse Course { get; set; }
+    public List<StudentResponse> Students { get; set; } = [];
 }

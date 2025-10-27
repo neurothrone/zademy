@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Zademy.Domain.Students;
 
-public record StudentInputDto
+public record StudentRequest
 {
     [Required]
     [MinLength(1)]
     [MaxLength(100)]
     [DefaultValue("John Doe")]
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
     [Required]
     [EmailAddress]
     [MaxLength(255)]
     [DefaultValue("john.doe@example.com")]
-    public required string Email { get; set; }
+    public required string Email { get; init; }
 }

@@ -12,7 +12,7 @@ public class GradeService(
     ILogger<GradeService> logger
 ) : IGradeService
 {
-    public async Task<Result<List<GradeDto>>> GetAllAsync()
+    public async Task<Result<List<GradeResponse>>> GetAllAsync()
     {
         try
         {
@@ -20,16 +20,16 @@ public class GradeService(
             var grades = entities
                 .Select(g => g.ToDto())
                 .ToList();
-            return Result<List<GradeDto>>.Success(grades);
+            return Result<List<GradeResponse>>.Success(grades);
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get all grades: {message}", ex.Message);
-            return Result<List<GradeDto>>.Failure("Failed to retrieve grades.");
+            return Result<List<GradeResponse>>.Failure("Failed to retrieve grades.");
         }
     }
 
-    public async Task<Result<List<StudentGradeWithCourseDto>>> GetGradesByStudentIdAsync(int studentId)
+    public async Task<Result<List<StudentGradeWithCourseResponse>>> GetGradesByStudentIdAsync(int studentId)
     {
         try
         {
@@ -37,12 +37,12 @@ public class GradeService(
             var gradesWithCourses = entities
                 .Select(g => g.ToGradeWithCourseDto())
                 .ToList();
-            return Result<List<StudentGradeWithCourseDto>>.Success(gradesWithCourses);
+            return Result<List<StudentGradeWithCourseResponse>>.Success(gradesWithCourses);
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get grades for student {studentId}: {message}", studentId, ex.Message);
-            return Result<List<StudentGradeWithCourseDto>>.Failure("Failed to retrieve grades.");
+            return Result<List<StudentGradeWithCourseResponse>>.Failure("Failed to retrieve grades.");
         }
     }
 }

@@ -26,7 +26,7 @@ public static class StudentHandlers
         );
     }
 
-    public static async Task<IResult> CreateStudentAsync(StudentInputDto student, IStudentService service)
+    public static async Task<IResult> CreateStudentAsync(StudentRequest student, IStudentService service)
     {
         if (!Validator.TryValidateObject(student, new ValidationContext(student), null, true))
             return TypedResults.BadRequest("Invalid student data.");
@@ -38,7 +38,7 @@ public static class StudentHandlers
         );
     }
 
-    public static async Task<IResult> UpdateStudentAsync(int id, StudentInputDto student, IStudentService service)
+    public static async Task<IResult> UpdateStudentAsync(int id, StudentRequest student, IStudentService service)
     {
         if (!Validator.TryValidateObject(student, new ValidationContext(student), null, true))
             return TypedResults.BadRequest("Invalid student data.");

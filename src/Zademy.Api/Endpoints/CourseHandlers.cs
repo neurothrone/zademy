@@ -26,7 +26,7 @@ public static class CourseHandlers
         );
     }
 
-    public static async Task<IResult> CreateCourseAsync(CourseInputDto course, ICourseService service)
+    public static async Task<IResult> CreateCourseAsync(CourseRequest course, ICourseService service)
     {
         if (!Validator.TryValidateObject(course, new ValidationContext(course), null, true))
             return TypedResults.BadRequest("Invalid course data.");
@@ -38,7 +38,7 @@ public static class CourseHandlers
         );
     }
 
-    public static async Task<IResult> UpdateCourseAsync(int id, CourseInputDto course, ICourseService service)
+    public static async Task<IResult> UpdateCourseAsync(int id, CourseRequest course, ICourseService service)
     {
         if (!Validator.TryValidateObject(course, new ValidationContext(course), null, true))
             return TypedResults.BadRequest("Invalid course data.");

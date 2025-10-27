@@ -5,14 +5,14 @@ namespace Zademy.Business.Mappers;
 
 public static class StudentMapper
 {
-    public static StudentDto ToDto(this StudentEntity entity) => new()
+    public static StudentResponse ToDto(this StudentEntity entity) => new()
     {
         Id = entity.Id,
         Name = entity.Name,
         Email = entity.Email
     };
 
-    public static StudentEntity ToEntity(this StudentInputDto dto, int id = 0) => new()
+    public static StudentEntity ToEntity(this StudentRequest dto, int id = 0) => new()
     {
         Id = id,
         Name = dto.Name,

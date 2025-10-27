@@ -5,14 +5,14 @@ namespace Zademy.Business.Mappers;
 
 public static class CourseMapper
 {
-    public static CourseDto ToDto(this CourseEntity entity) => new()
+    public static CourseResponse ToDto(this CourseEntity entity) => new()
     {
         Id = entity.Id,
         Title = entity.Title,
         Description = entity.Description
     };
 
-    public static CourseEntity ToEntity(this CourseInputDto dto, int id = 0) => new()
+    public static CourseEntity ToEntity(this CourseRequest dto, int id = 0) => new()
     {
         Id = id,
         Title = dto.Title,

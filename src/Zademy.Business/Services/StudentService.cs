@@ -13,7 +13,7 @@ public class StudentService(
     ILogger<StudentService> logger
 ) : IStudentService
 {
-    public async Task<Result<List<StudentDto>>> GetAllAsync()
+    public async Task<Result<List<StudentResponse>>> GetAllAsync()
     {
         try
         {
@@ -21,56 +21,56 @@ public class StudentService(
             var students = entities
                 .Select(e => e.ToDto())
                 .ToList();
-            return Result<List<StudentDto>>.Success(students);
+            return Result<List<StudentResponse>>.Success(students);
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get Students: {}", ex.Message);
-            return Result<List<StudentDto>>.Failure("Failed to retrieve students from the database.");
+            return Result<List<StudentResponse>>.Failure("Failed to retrieve students from the database.");
         }
     }
 
-    public async Task<Result<StudentDto?>> GetByIdAsync(int id)
+    public async Task<Result<StudentResponse?>> GetByIdAsync(int id)
     {
         try
         {
             var entity = await repository.GetByIdAsync(id);
-            return Result<StudentDto?>.Success(entity?.ToDto());
+            return Result<StudentResponse?>.Success(entity?.ToDto());
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get Student by ID {id}: {message}", id, ex.Message);
-            return Result<StudentDto?>.Failure("Failed to retrieve the student from the database.");
+            return Result<StudentResponse?>.Failure("Failed to retrieve the student from the database.");
         }
     }
 
-    public async Task<Result<StudentDto>> CreateAsync(StudentInputDto student)
+    public async Task<Result<StudentResponse>> CreateAsync(StudentRequest student)
     {
         try
         {
             var entity = student.ToEntity();
             var createdEntity = await repository.CreateAsync(entity);
-            return Result<StudentDto>.Success(createdEntity.ToDto());
+            return Result<StudentResponse>.Success(createdEntity.ToDto());
         }
         catch (DbUpdateException ex)
         {
             logger.LogError("❌ -> Failed to create Student: {message}", ex.Message);
-            return Result<StudentDto>.Failure("Failed to create the student in the database.");
+            return Result<StudentResponse>.Failure("Failed to create the student in the database.");
         }
     }
 
-    public async Task<Result<StudentDto?>> UpdateAsync(int id, StudentInputDto student)
+    public async Task<Result<StudentResponse?>> UpdateAsync(int id, StudentRequest student)
     {
         try
         {
             var entity = student.ToEntity(id: id);
             var updatedEntity = await repository.UpdateAsync(id, entity);
-            return Result<StudentDto?>.Success(updatedEntity?.ToDto());
+            return Result<StudentResponse?>.Success(updatedEntity?.ToDto());
         }
         catch (DbUpdateException ex)
         {
             logger.LogError("❌ -> Failed to update Student ID {id}: {message}", id, ex.Message);
-            return Result<StudentDto?>.Failure("Failed to update the student in the database.");
+            return Result<StudentResponse?>.Failure("Failed to update the student in the database.");
         }
     }
 

@@ -47,7 +47,7 @@ public class CourseInstanceService(
         }
     }
 
-    public async Task<Result<List<CourseDto>>> GetCoursesByStudentIdAsync(int studentId)
+    public async Task<Result<List<CourseResponse>>> GetCoursesByStudentIdAsync(int studentId)
     {
         try
         {
@@ -55,17 +55,17 @@ public class CourseInstanceService(
             var courses = entities
                 .Select(e => e.ToDto())
                 .ToList();
-            return Result<List<CourseDto>>.Success(courses);
+            return Result<List<CourseResponse>>.Success(courses);
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get Courses for Student with ID {studentId}: {message}",
                 studentId, ex.Message);
-            return Result<List<CourseDto>>.Failure("Failed to retrieve courses from the database.");
+            return Result<List<CourseResponse>>.Failure("Failed to retrieve courses from the database.");
         }
     }
 
-    public async Task<Result<List<CourseDto>>> GetCoursesByDateRangeAsync(DateTime startDate, DateTime endDate)
+    public async Task<Result<List<CourseResponse>>> GetCoursesByDateRangeAsync(DateTime startDate, DateTime endDate)
     {
         try
         {
@@ -73,13 +73,13 @@ public class CourseInstanceService(
             var courses = entities
                 .Select(e => e.ToDto())
                 .ToList();
-            return Result<List<CourseDto>>.Success(courses);
+            return Result<List<CourseResponse>>.Success(courses);
         }
         catch (Exception ex)
         {
             logger.LogError("❌ -> Failed to get Courses between {startDate} and {endDate}: {message}",
                 startDate, endDate, ex.Message);
-            return Result<List<CourseDto>>.Failure("Failed to retrieve courses from the database.");
+            return Result<List<CourseResponse>>.Failure("Failed to retrieve courses from the database.");
         }
     }
 

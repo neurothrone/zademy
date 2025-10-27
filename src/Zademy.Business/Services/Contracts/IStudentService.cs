@@ -5,9 +5,9 @@ namespace Zademy.Business.Services.Contracts;
 
 public interface IStudentService
 {
-    Task<Result<List<StudentDto>>> GetAllAsync();
-    Task<Result<StudentDto?>> GetByIdAsync(int id);
-    Task<Result<StudentDto>> CreateAsync(StudentInputDto student);
-    Task<Result<StudentDto?>> UpdateAsync(int id, StudentInputDto student);
+    Task<Result<List<StudentResponse>>> GetAllAsync();
+    Task<Result<StudentResponse?>> GetByIdAsync(int id);
+    Task<Result<StudentResponse>> CreateAsync(StudentRequest student);
+    Task<Result<StudentResponse?>> UpdateAsync(int id, StudentRequest student);
     Task<Result<bool>> DeleteAsync(int id);
 }

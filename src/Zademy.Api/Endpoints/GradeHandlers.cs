@@ -22,7 +22,7 @@ public static class GradeHandlers
         IGradeService gradeService)
     {
         var studentResult = await studentService.GetByIdAsync(id);
-        if (studentResult is not SuccessResult<StudentDto> { Value: not null and var student })
+        if (studentResult is not SuccessResult<StudentResponse> { Value: not null and var student })
             return TypedResults.NotFound();
 
 

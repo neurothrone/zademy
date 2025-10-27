@@ -26,14 +26,14 @@ public static class CourseInstanceEndpoints
         group.MapGet("/students/{id:int:min(0)}/courses", CourseInstanceHandlers.GetCoursesByStudentIdAsync)
             .WithSummary("Get courses by student ID")
             .WithDescription("Get courses assigned to a specific student")
-            .Produces<List<CourseDto>>()
+            .Produces<List<CourseResponse>>()
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapGet("/courses", CourseInstanceHandlers.GetCoursesByDateRangeAsync)
             .AddEndpointFilter<ValidateModelFilter>()
             .WithSummary("Get courses by date range")
             .WithDescription("Get courses by date range")
-            .Produces<List<CourseDto>>()
+            .Produces<List<CourseResponse>>()
             .Produces(StatusCodes.Status400BadRequest);
 
         group.MapPost("", CourseInstanceHandlers.CreateCourseInstanceAsync)
