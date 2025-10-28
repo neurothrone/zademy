@@ -2,7 +2,7 @@ using Zademy.Api.Filters;
 using Zademy.Domain.CourseInstances;
 using Zademy.Domain.Courses;
 
-namespace Zademy.Api.Endpoints;
+namespace Zademy.Api.Endpoints.CourseInstances;
 
 public static class CourseInstanceEndpoints
 {

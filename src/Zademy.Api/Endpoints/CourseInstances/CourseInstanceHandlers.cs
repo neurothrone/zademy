@@ -3,7 +3,7 @@ using Zademy.Business.Services.Contracts;
 using Zademy.Domain.CourseInstances;
 using Zademy.Domain.Utils;
 
-namespace Zademy.Api.Endpoints;
+namespace Zademy.Api.Endpoints.CourseInstances;
 
 public static class CourseInstanceHandlers
 {

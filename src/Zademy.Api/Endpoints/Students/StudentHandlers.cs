@@ -1,7 +1,7 @@
 using Zademy.Business.Services.Contracts;
 using Zademy.Domain.Students;
 
-namespace Zademy.Api.Endpoints;
+namespace Zademy.Api.Endpoints.Students;
 
 public static class StudentHandlers
 {

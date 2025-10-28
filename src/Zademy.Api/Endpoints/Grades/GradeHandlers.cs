@@ -3,7 +3,7 @@ using Zademy.Domain.Grades;
 using Zademy.Domain.Students;
 using Zademy.Domain.Utils;
 
-namespace Zademy.Api.Endpoints;
+namespace Zademy.Api.Endpoints.Grades;
 
 public static class GradeHandlers
 {

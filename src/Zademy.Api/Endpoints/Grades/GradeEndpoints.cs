@@ -1,7 +1,7 @@
 using Zademy.Api.Filters;
 using Zademy.Domain.Grades;
 
-namespace Zademy.Api.Endpoints;
+namespace Zademy.Api.Endpoints.Grades;
 
 public static class GradeEndpoints
 {
