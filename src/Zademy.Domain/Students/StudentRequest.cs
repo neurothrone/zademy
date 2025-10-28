@@ -6,8 +6,7 @@ namespace Zademy.Domain.Students;
 public record StudentRequest
 {
     [Required]
-    [MinLength(1)]
-    [MaxLength(100)]
+    [StringLength(maximumLength: 100, MinimumLength = 1, ErrorMessage = "Name must be between 1 and 100 characters")]
     [DefaultValue("John Doe")]
     public required string Name { get; init; }
 

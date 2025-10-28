@@ -6,13 +6,11 @@ namespace Zademy.Domain.Courses;
 public record CourseRequest
 {
     [Required]
-    [MinLength(3, ErrorMessage = "Title must be at least 3 characters")]
-    [MaxLength(255)]
+    [StringLength(maximumLength: 255, MinimumLength = 3, ErrorMessage = "Title must be between 3 and 255 characters")]
     [DefaultValue("Course Title")]
     public required string Title { get; init; }
 
     [Required]
-    // [MinLength(1)]
     [MaxLength(255)]
     [DefaultValue("Course Description")]
     public required string Description { get; init; }
