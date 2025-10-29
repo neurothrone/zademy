@@ -1,0 +1,17 @@
+@ApiUrl = https://localhost:7001/api/v1/users
+@Authorization = Bearer {{AccessToken}}
+
+
+### Get All Users
+GET {{ApiUrl}}
+Accept: application/json
+Authorization: {{Authorization}}
+
+### Update User
+PUT {{ApiUrl}}/update
+Content-Type: application/json
+Authorization: {{Authorization}}
+
+{
+  "title": "Captain"
+}
