@@ -1,0 +1,38 @@
+@ApiUrl = https://localhost:7001/api/v1/courses
+@Authorization = Bearer {{AccessToken}}
+@CourseId = 1
+
+
+### Get all Courses
+GET {{ApiUrl}}
+Accept: application/json
+Authorization: {{Authorization}}
+
+### Get a Course by ID
+GET {{ApiUrl}}/{{CourseId}}
+Accept: application/json
+Authorization: {{Authorization}}
+
+### Create a new Course
+POST {{ApiUrl}}
+Content-Type: application/json
+Authorization: {{Authorization}}
+
+{
+  "title": "Introduction to Programming",
+  "description": "Learn the basics of programming using Python."
+}
+
+### Update a Course by ID
+PUT {{ApiUrl}}/{{CourseId}}
+Content-Type: application/json
+Authorization: {{Authorization}}
+
+{
+  "title": "Introduction to Programming 101",
+  "description": "Learn programming basics with Python."
+}
+
+### Delete a Course by ID
+DELETE {{ApiUrl}}/{{CourseId}}
+Authorization: {{Authorization}}
