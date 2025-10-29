@@ -11,7 +11,8 @@ public static class WebApplicationExtensions
 {
     public static void UseZademyIdentity(this WebApplication app)
     {
-        var group = app.MapGroup($"{ApiVersioning.RoutePrefix}/auth");
+        var group = app.MapGroup($"{ApiVersioning.RoutePrefix}/auth")
+            .WithTags("Authentication");
         group.MapIdentityApi<UserEntity>();
         
         app.UseAuthentication();
