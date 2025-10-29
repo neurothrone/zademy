@@ -1,3 +1,4 @@
+using Zademy.Api.Configuration;
 using Zademy.Api.Endpoints.CourseInstances;
 using Zademy.Api.Endpoints.Courses;
 using Zademy.Api.Endpoints.Grades;
@@ -10,7 +11,7 @@ public static class WebApplicationExtensions
 {
     public static void UseZademyIdentity(this WebApplication app)
     {
-        var group = app.MapGroup("/api/v1/auth");
+        var group = app.MapGroup($"{ApiVersioning.RoutePrefix}/auth");
         group.MapIdentityApi<UserEntity>();
         
         app.UseAuthentication();

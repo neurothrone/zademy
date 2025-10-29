@@ -1,3 +1,4 @@
+using Zademy.Api.Configuration;
 using Zademy.Api.Filters;
 using Zademy.Domain.Grades;
 
@@ -8,7 +9,7 @@ public static class GradeEndpoints
     public static void MapGradeEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var group = endpoints
-            .MapGroup("/api/v1/grades")
+            .MapGroup($"{ApiVersioning.RoutePrefix}/grades")
             .WithTags("Grades");
 
         group.MapGet("", GradeHandlers.GetGradesAsync)

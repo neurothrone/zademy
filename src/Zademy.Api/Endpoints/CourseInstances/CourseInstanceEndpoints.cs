@@ -1,3 +1,4 @@
+using Zademy.Api.Configuration;
 using Zademy.Api.Filters;
 using Zademy.Domain.CourseInstances;
 using Zademy.Domain.Courses;
@@ -9,7 +10,7 @@ public static class CourseInstanceEndpoints
     public static void MapCourseInstanceEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var group = endpoints
-            .MapGroup("/api/v1/course-instances")
+            .MapGroup($"{ApiVersioning.RoutePrefix}/course-instances")
             .WithTags("Course Instances");
 
         group.MapGet("", CourseInstanceHandlers.GetCourseInstancesAsync)

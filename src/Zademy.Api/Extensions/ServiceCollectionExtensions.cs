@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Zademy.Api.Configuration;
 using Zademy.Api.Filters;
 using Zademy.Business.Services;
 using Zademy.Business.Services.Contracts;
@@ -68,11 +69,11 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo
+            options.SwaggerDoc(ApiVersioning.Version, new OpenApiInfo
             {
                 Title = "Zademy API",
                 Description = "API for managing courses, students, course instances, and grades.",
-                Version = "v1"
+                Version = ApiVersioning.Version
             });
 
             options.DocumentFilter<CustomOrderingDocumentFilter>();

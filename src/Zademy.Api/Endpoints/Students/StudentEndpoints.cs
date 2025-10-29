@@ -1,3 +1,4 @@
+using Zademy.Api.Configuration;
 using Zademy.Api.Filters;
 using Zademy.Domain.Students;
 
@@ -8,7 +9,7 @@ public static class StudentEndpoints
     public static void MapStudentEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var group = endpoints
-            .MapGroup("/api/v1/students")
+            .MapGroup($"{ApiVersioning.RoutePrefix}/students")
             .WithTags("Students");
 
         group.MapGet("", StudentHandlers.GetStudentsAsync)
