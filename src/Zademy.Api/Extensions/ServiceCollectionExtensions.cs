@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using Zademy.Api.Configuration;
 using Zademy.Api.Filters;
@@ -49,6 +50,7 @@ public static class ServiceCollectionExtensions
         services.AddAuthorization();
     }
 
+
     public static void AddZademyServices(this IServiceCollection services)
     {
         services.AddScoped<ICourseRepository, CourseRepository>();
@@ -78,5 +80,27 @@ public static class ServiceCollectionExtensions
 
             options.DocumentFilter<CustomOrderingDocumentFilter>();
         });
+    }
+
+    public static void MapZademyHealthChecks(this WebApplication app)
+    {
+        app.MapHealthChecks("/health");
+    }
+
+
+    public static void AddZademyHealthChecks(this IServiceCollection services)
+    {
+        services.AddHealthChecks()
+            .AddDbContextCheck<ZademyAppDbContext>()
+            .AddDbContextCheck<ZademyIdentityDbContext>()
+            .AddCheck("Memory", () =>
+            {
+                var allocated = GC.GetTotalMemory(forceFullCollection: false);
+                const long threshold = 1024L * 1024L * 1024L; // 1 GB
+                return allocated < threshold
+                    ? HealthCheckResult.Healthy()
+                    : HealthCheckResult.Degraded($"Memory usage: {allocated / 1024 / 1024} MB");
+            });
+        ;
     }
 }

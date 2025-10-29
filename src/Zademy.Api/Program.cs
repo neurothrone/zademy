@@ -8,6 +8,7 @@ builder.Services.AddZademyDatabase();
 builder.Services.AddZademyIdentity();
 builder.Services.AddZademyServices();
 builder.Services.AddZademySwagger();
+builder.Services.AddZademyHealthChecks();
 
 var app = builder.Build();
 
@@ -26,6 +27,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapZademyHealthChecks();
 
 app.UseStaticFiles();
 app.MapGet("/", context =>
