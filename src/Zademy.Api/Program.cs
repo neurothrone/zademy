@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Zademy.Api.Endpoints;
 using Zademy.Api.Endpoints.CourseInstances;
 using Zademy.Api.Endpoints.Courses;
 using Zademy.Api.Endpoints.Grades;
