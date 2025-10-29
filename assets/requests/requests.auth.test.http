@@ -1,0 +1,87 @@
+@BaseApiUrl = https://localhost:7001/api/v1
+@AuthApiUrl = {{BaseApiUrl}}/auth
+@CoursesApiUrl = {{BaseApiUrl}}/courses
+
+### Test Scenario: Full User Flow
+# This will run in sequence: Register -> Login -> Get Courses -> Create Course
+
+### 1. Register a new user
+POST {{AuthApiUrl}}/register
+Content-Type: application/json
+
+{
+  "email": "test.user@example.com",
+  "password": "TestPassword123!"
+}
+
+###
+
+### 2. Login with the registered user
+POST {{AuthApiUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "test.user@example.com",
+  "password": "TestPassword123!"
+}
+
+> {%
+    client.test("Login successful", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    if (response.body.accessToken) {
+        client.global.set("AccessToken", response.body.accessToken);
+        console.log("Access token stored for test scenario");
+    }
+%}
+
+###
+
+### 3. Get all courses (authenticated)
+GET {{CoursesApiUrl}}
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+> {%
+    client.test("Get courses successful", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+### 4. Create a new course (authenticated)
+POST {{CoursesApiUrl}}
+Content-Type: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "title": "Test Course from Scenario",
+  "description": "This course was created by an automated test scenario."
+}
+
+> {%
+    client.test("Create course successful", function () {
+        client.assert(response.status === 200 || response.status === 201, "Course creation failed");
+    });
+
+    if (response.body.id) {
+        client.global.set("LastCreatedCourseId", response.body.id);
+        console.log("Created course ID: " + response.body.id);
+    }
+%}
+
+###
+
+### 5. Get the created course
+GET {{CoursesApiUrl}}/{{LastCreatedCourseId}}
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+> {%
+    client.test("Get created course successful", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.title === "Test Course from Scenario", "Course title doesn't match");
+    });
+%}
