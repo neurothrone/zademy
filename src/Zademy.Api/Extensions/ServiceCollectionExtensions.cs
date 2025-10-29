@@ -69,11 +69,11 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc(ApiVersioning.Version, new OpenApiInfo
+            options.SwaggerDoc(ApiVersioning.DocName, new OpenApiInfo
             {
                 Title = "Zademy API",
                 Description = "API for managing courses, students, course instances, and grades.",
-                Version = ApiVersioning.Version
+                Version = ApiVersioning.SemanticName
             });
 
             options.DocumentFilter<CustomOrderingDocumentFilter>();

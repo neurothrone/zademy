@@ -2,8 +2,12 @@ namespace Zademy.Api.Configuration;
 
 public static class ApiVersioning
 {
-    public const string Version = "v1";
-    private const string Prefix = "/api";
-    
-    public static string RoutePrefix => $"{Prefix}/{Version}";
+    // used as the Swagger doc/group name and in route grouping (e.g. "v1")
+    public const string DocName = "v1";
+
+    // semantic version shown in OpenAPI Info (e.g. "1.0")
+    public const string SemanticName = "1.0";
+
+    public const string Prefix = "/api";
+    public static string RoutePrefix => $"{Prefix}/{DocName}";
 }
