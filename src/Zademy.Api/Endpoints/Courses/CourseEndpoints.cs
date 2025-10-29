@@ -6,9 +6,9 @@ namespace Zademy.Api.Endpoints.Courses;
 
 public static class CourseEndpoints
 {
-    public static void MapCourseEndpoints(this IEndpointRouteBuilder endpoints)
+    public static void MapCourseEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = endpoints
+        var group = app
             .MapGroup($"{ApiVersioning.RoutePrefix}/courses")
             .RequireAuthorization()
             .WithTags("Courses");

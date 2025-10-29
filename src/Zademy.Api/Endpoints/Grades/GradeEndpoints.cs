@@ -6,9 +6,9 @@ namespace Zademy.Api.Endpoints.Grades;
 
 public static class GradeEndpoints
 {
-    public static void MapGradeEndpoints(this IEndpointRouteBuilder endpoints)
+    public static void MapGradeEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = endpoints
+        var group = app
             .MapGroup($"{ApiVersioning.RoutePrefix}/grades")
             .WithTags("Grades");
 

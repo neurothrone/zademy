@@ -6,9 +6,9 @@ namespace Zademy.Api.Endpoints.Students;
 
 public static class StudentEndpoints
 {
-    public static void MapStudentEndpoints(this IEndpointRouteBuilder endpoints)
+    public static void MapStudentEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = endpoints
+        var group = app
             .MapGroup($"{ApiVersioning.RoutePrefix}/students")
             .WithTags("Students");
 
