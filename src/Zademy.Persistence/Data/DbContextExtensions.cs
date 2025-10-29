@@ -5,11 +5,30 @@ namespace Zademy.Persistence.Data;
 
 public static class DbContextExtensions
 {
-    public static void SeedInMemoryDatabase(this IServiceProvider serviceProvider)
+    public static void SetupDatabase(this IServiceProvider serviceProvider, bool seedData = false)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ZademyAppDbContext>();
+        var appDbContext = scope.ServiceProvider.GetRequiredService<ZademyAppDbContext>();
+        var identityDbContext = scope.ServiceProvider.GetRequiredService<ZademyIdentityDbContext>();
 
+        try
+        {
+            appDbContext.Database.EnsureCreated();
+            identityDbContext.Database.EnsureCreated();
+        }
+        catch (Exception ex)
+        {
+            var message = string.Format("Failed to create databases. AppDb: {0}, IdentityDb: {1}. Error: {2}",
+                appDbContext.Database.ProviderName, identityDbContext.Database.ProviderName, ex.Message);
+            throw new Exception(message, ex);
+        }
+
+        if (seedData)
+            SeedDatabase(appDbContext);
+    }
+
+    private static void SeedDatabase(ZademyAppDbContext context)
+    {
         var course1 = new CourseEntity { Id = 1, Title = "Course 1", Description = "Course 1 description" };
         var course2 = new CourseEntity { Id = 2, Title = "Course 2", Description = "Course 2 description" };
 
