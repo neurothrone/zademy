@@ -1,5 +1,6 @@
 using Zademy.Api.Configuration;
 using Zademy.Api.Extensions;
+using Zademy.Api.Middlewares;
 using Zademy.Persistence.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,7 @@ app.MapGet("/", context =>
 });
 
 app.UseZademyIdentity();
+app.UseMiddleware<UserDeletionAuthorizationMiddleware>();
 app.MapZademyEndpoints();
 
 app.Run();
