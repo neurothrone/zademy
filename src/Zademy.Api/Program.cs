@@ -18,27 +18,21 @@ app.Services.SetupDatabase(seedData: true);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.UseSwaggerUI(options =>
     {
-        c.SwaggerEndpoint(
+        options.SwaggerEndpoint(
             url: $"/swagger/{ApiVersioning.DocName}/swagger.json",
             name: $"Zademy API {ApiVersioning.SemanticName}"
         );
+        // options.RoutePrefix = string.Empty; // Sets Swagger UI to be served at the root
     });
 }
 
 app.UseHttpsRedirection();
-app.MapZademyHealthChecks();
-
-app.UseStaticFiles();
-app.MapGet("/", context =>
-{
-    context.Response.Redirect("/index.html");
-    return Task.CompletedTask;
-});
 
 app.UseZademyIdentity();
 app.UseMiddleware<UserDeletionAuthorizationMiddleware>();
+app.MapZademyHealthChecks();
 app.MapZademyEndpoints();
 
 app.Run();

@@ -22,6 +22,13 @@ public static class WebApplicationExtensions
 
     public static void MapZademyEndpoints(this WebApplication app)
     {
+        app.UseStaticFiles();
+        app.MapGet("/", context =>
+        {
+            context.Response.Redirect("/index.html");
+            return Task.CompletedTask;
+        });
+        
         app.MapCourseEndpoints();
         app.MapStudentEndpoints();
         app.MapCourseInstanceEndpoints();
