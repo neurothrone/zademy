@@ -10,6 +10,7 @@ public static class CourseEndpoints
     {
         var group = endpoints
             .MapGroup($"{ApiVersioning.RoutePrefix}/courses")
+            .RequireAuthorization()
             .WithTags("Courses");
 
         group.MapGet("", CourseHandlers.GetCoursesAsync)
