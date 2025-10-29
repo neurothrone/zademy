@@ -1,3 +1,4 @@
+using Zademy.Api.Configuration;
 using Zademy.Api.Extensions;
 using Zademy.Persistence.Data;
 
@@ -15,7 +16,13 @@ app.Services.SetupDatabase(seedData: true);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint(
+            url: $"/swagger/{ApiVersioning.DocName}/swagger.json",
+            name: $"Zademy API {ApiVersioning.SemanticName}"
+        );
+    });
 }
 
 app.UseHttpsRedirection();
