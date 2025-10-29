@@ -5,7 +5,7 @@ using Zademy.Persistence.Repositories.Contracts;
 
 namespace Zademy.Persistence.Repositories;
 
-public class CourseInstanceRepository(ZademyDbContext context) :
+public class CourseInstanceRepository(ZademyAppDbContext context) :
     BaseRepository<CourseInstanceEntity>(context),
     ICourseInstanceRepository
 {

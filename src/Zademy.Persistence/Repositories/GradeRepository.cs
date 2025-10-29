@@ -5,7 +5,7 @@ using Zademy.Persistence.Repositories.Contracts;
 
 namespace Zademy.Persistence.Repositories;
 
-public class GradeRepository(ZademyDbContext context) :
+public class GradeRepository(ZademyAppDbContext context) :
     BaseRepository<GradeEntity>(context),
     IGradeRepository
 {

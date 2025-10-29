@@ -8,7 +8,7 @@ public static class DbContextExtensions
     public static void SeedInMemoryDatabase(this IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ZademyDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ZademyAppDbContext>();
 
         var course1 = new CourseEntity { Id = 1, Title = "Course 1", Description = "Course 1 description" };
         var course2 = new CourseEntity { Id = 2, Title = "Course 2", Description = "Course 2 description" };

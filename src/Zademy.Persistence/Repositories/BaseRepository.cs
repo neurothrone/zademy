@@ -5,10 +5,10 @@ namespace Zademy.Persistence.Repositories;
 
 public abstract class BaseRepository<TEntity> where TEntity : class
 {
-    protected readonly ZademyDbContext Context;
+    protected readonly ZademyAppDbContext Context;
     private readonly DbSet<TEntity> _dbSet;
 
-    protected BaseRepository(ZademyDbContext context)
+    protected BaseRepository(ZademyAppDbContext context)
     {
         Context = context;
         _dbSet = Context.Set<TEntity>();

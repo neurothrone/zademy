@@ -13,7 +13,7 @@ using Zademy.Persistence.Repositories.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ZademyDbContext>(options =>
+builder.Services.AddDbContext<ZademyAppDbContext>(options =>
 {
     options.UseInMemoryDatabase("ZademyDb");
 
