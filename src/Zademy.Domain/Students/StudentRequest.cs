@@ -14,5 +14,5 @@ public record StudentRequest
     [EmailAddress]
     [MaxLength(255)]
     [DefaultValue("john.doe@example.com")]
-    public required string Email { get; init; }
+    public  string Email { get; init; }
 }
