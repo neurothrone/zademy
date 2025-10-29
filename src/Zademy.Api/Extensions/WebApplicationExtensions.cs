@@ -10,7 +10,9 @@ public static class WebApplicationExtensions
 {
     public static void UseZademyIdentity(this WebApplication app)
     {
-        app.MapIdentityApi<UserEntity>();
+        var group = app.MapGroup("/api/v1/auth");
+        group.MapIdentityApi<UserEntity>();
+        
         app.UseAuthentication();
         app.UseAuthorization();
     }
