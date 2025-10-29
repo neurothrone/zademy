@@ -13,5 +13,9 @@ Content-Type: application/json
 Authorization: {{Authorization}}
 
 {
-  "title": "Captain"
+  "title": "admin"
 }
+
+### Delete User
+DELETE {{ApiUrl}}
+Authorization: {{Authorization}}
