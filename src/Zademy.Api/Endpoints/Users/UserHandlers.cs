@@ -7,9 +7,9 @@ namespace Zademy.Api.Endpoints.Users;
 
 public static class UserHandlers
 {
-    public static async Task<IResult> GetUsersAsync(UserManager<UserEntity> userManager)
+    public static Task<IResult> GetUsersAsync(UserManager<UserEntity> userManager)
     {
-        return TypedResults.Ok(userManager.Users);
+        return Task.FromResult<IResult>(TypedResults.Ok(userManager.Users));
     }
 
     public static async Task<IResult> UpdateUserAsync(
