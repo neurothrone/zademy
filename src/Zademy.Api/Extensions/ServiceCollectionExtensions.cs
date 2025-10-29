@@ -101,6 +101,5 @@ public static class ServiceCollectionExtensions
                     ? HealthCheckResult.Healthy()
                     : HealthCheckResult.Degraded($"Memory usage: {allocated / 1024 / 1024} MB");
             });
-        ;
     }
 }
